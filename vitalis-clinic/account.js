@@ -29,6 +29,9 @@ const account = (() => {
 
   function openCabinet(tab = "visits") {
     renderCabinet();
+    const medcard = Auth.getData("medcard", {});
+    $("#birthInput").value = medcard.birth || "";
+    $("#allergyInput").value = medcard.allergy || "";
     selectTab(tab);
     openLayer(cabinetModal);
   }
@@ -80,9 +83,6 @@ const account = (() => {
           .join("")
       : `<li class="visits__empty">Записей пока нет. <a href="#booking" data-close-link>Записаться к врачу →</a></li>`;
 
-    const medcard = Auth.getData("medcard", {});
-    $("#birthInput").value = medcard.birth || "";
-    $("#allergyInput").value = medcard.allergy || "";
   }
 
   function prefillWizard() {

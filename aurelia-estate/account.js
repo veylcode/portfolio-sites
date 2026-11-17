@@ -70,8 +70,8 @@ const account = (() => {
             <li class="cab-request">
               <time>${new Date(request.at).toLocaleDateString("ru-RU", { day: "numeric", month: "long" })}</time>
               <div>
-                <h4>${request.interest || "Индивидуальная подборка"}</h4>
-                <p>${request.message || "Без комментария"}</p>
+                <h4>${escapeHtml(request.interest || "Индивидуальная подборка")}</h4>
+                <p>${escapeHtml(request.message || "Без комментария")}</p>
               </div>
               <span class="cab-request__status">${isOld ? "Просмотр назначен" : "На рассмотрении"}</span>
             </li>`;

@@ -234,7 +234,9 @@ const wizard = (() => {
     $("#monthLabel").textContent = month.toLocaleDateString("ru-RU", { month: "long", year: "numeric" });
 
     const minMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    const maxMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+    const lastAvailableDate = new Date(today);
+    lastAvailableDate.setDate(today.getDate() + 45);
+    const maxMonth = new Date(lastAvailableDate.getFullYear(), lastAvailableDate.getMonth(), 1);
     $("#prevMonth").disabled = month <= minMonth;
     $("#nextMonth").disabled = month >= maxMonth;
   }

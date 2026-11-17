@@ -132,11 +132,21 @@ const state = {
   budget: Infinity,
   rooms: 0,
   sort: "featured",
-  favorites: new Set(JSON.parse(localStorage.getItem("aurelia-favorites") || "[]"))
+  favorites: new Set(loadFavorites())
 };
+
+function loadFavorites() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("aurelia-favorites"));
+    return Array.isArray(saved) ? saved.filter((id) => properties.some((item) => item.id === id)) : [];
+  } catch {
+    return [];
+  }
+}
 
 const $ = (selector, scope = document) => scope.querySelector(selector);
 const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
 
 const formatRub = (value) =>
   new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 }).format(Math.round(value)) + " ₽";
@@ -543,7 +553,7 @@ function initCursor() {
   const loop = () => {
     currentX += (x - currentX) * 0.2;
     currentY += (y - currentY) * 0.2;
-    cursor.style.transform = `translate(${currentX}px, ${currentY}px) translate(-50%, -50%)`;
+    cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
     requestAnimationFrame(loop);
   };
   loop();
@@ -551,12 +561,15 @@ function initCursor() {
 }
 
 function initLoader() {
+  const loader = $("#loader");
+  loader.addEventListener("transitionend", () => loader.remove(), { once: true });
   let isDone = false;
   const finish = () => {
     if (isDone) return;
     isDone = true;
-    $("#loader").classList.add("is-done");
+    loader.classList.add("is-done");
     document.body.classList.add("is-ready");
+    setTimeout(() => loader.remove(), 1400);
   };
   addEventListener("load", () => setTimeout(finish, 700));
   setTimeout(finish, 2600);

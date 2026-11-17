@@ -37,16 +37,17 @@ const shiftDays = (days) => {
 };
 
 const todayKey = () => toKey(new Date());
+const dateFromKey = (key) => new Date(`${key}T00:00:00`);
 
 const rub = (value) => new Intl.NumberFormat("ru-RU").format(value) + " ₽";
 
 const shortDate = (key) => {
   if (!key) return "без срока";
-  const diff = Math.round((new Date(key) - new Date(todayKey())) / 86400000);
+  const diff = Math.round((dateFromKey(key) - dateFromKey(todayKey())) / 86400000);
   if (diff === 0) return "сегодня";
   if (diff === 1) return "завтра";
   if (diff === -1) return "вчера";
-  return new Date(key).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
+  return dateFromKey(key).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
 };
 
 const isOverdue = (task) => task.due && task.status !== "done" && task.due < todayKey();
@@ -101,7 +102,7 @@ function createDefaultState() {
   let seed = 11;
   const random = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
   for (let offset = 40; offset >= 1; offset -= 1) {
-    const weekday = new Date(shiftDays(-offset)).getDay();
+    const weekday = dateFromKey(shiftDays(-offset)).getDay();
     const base = weekday === 0 || weekday === 6 ? 0.5 : 3;
     history[shiftDays(-offset)] = Math.round(base + random() * 4);
   }
@@ -154,7 +155,9 @@ function addFeed(text, who = CURRENT_USER) {
 function toast(message, action) {
   const element = document.createElement("div");
   element.className = "toast";
-  element.innerHTML = `<span>${message}</span>`;
+  const text = document.createElement("span");
+  text.textContent = message;
+  element.append(text);
   if (action) {
     const button = document.createElement("button");
     button.textContent = action.label;
@@ -330,7 +333,7 @@ function renderChart() {
   const labelEvery = Math.ceil(series.length / 7);
   const labels = points
     .filter((_, index) => index % labelEvery === 0 || index === points.length - 1)
-    .map((point) => `<text class="chart__label" x="${point.x}" y="${height - 4}" text-anchor="middle">${new Date(point.key).getDate()}</text>`)
+    .map((point) => `<text class="chart__label" x="${point.x}" y="${height - 4}" text-anchor="middle">${dateFromKey(point.key).getDate()}</text>`)
     .join("");
 
   const step = innerWidth / (series.length - 1);
@@ -370,7 +373,7 @@ function renderChart() {
     tip.style.left = `${point.x}px`;
     tip.style.top = `${point.y}px`;
     tip.style.opacity = 1;
-    tip.textContent = `${new Date(point.key).toLocaleDateString("ru-RU", { day: "numeric", month: "short" })} · ${point.value} задач`;
+    tip.textContent = `${dateFromKey(point.key).toLocaleDateString("ru-RU", { day: "numeric", month: "short" })} · ${point.value} задач`;
   };
   container.onmouseleave = () => {
     dot.style.opacity = 0;
@@ -444,6 +447,7 @@ function initBoard() {
   });
 
   board.addEventListener("dragend", (event) => {
+    draggedId = null;
     event.target.closest(".card")?.classList.remove("is-dragging");
     $$(".column", board).forEach((column) => column.classList.remove("is-over"));
   });
@@ -528,7 +532,7 @@ function renderClients() {
         .map(
           (client, index) => `
           <tr data-client="${client.id}" style="animation-delay:${index * 30}ms">
-            <td><div class="company"><span class="company__logo" style="--color:${client.color}">${initials(client.company)}</span><div>${escapeHtml(client.company)}<small>${escapeHtml(client.industry || "—")}</small></div></div></td>
+            <td><div class="company"><span class="company__logo" style="--color:${client.color}">${escapeHtml(initials(client.company))}</span><div>${escapeHtml(client.company)}<small>${escapeHtml(client.industry || "—")}</small></div></div></td>
             <td>${escapeHtml(client.contact)}</td>
             <td><span class="status status--${client.status}">${clientStatuses[client.status]}</span></td>
             <td class="mono">${rub(client.value)}</td>
@@ -573,10 +577,10 @@ function initClients() {
   $("#clientForm").addEventListener("submit", (event) => {
     event.preventDefault();
     const form = event.target;
-    const invalid = $$("[required]", form).filter((input) => !input.checkValidity());
+    const invalid = $$("input", form).filter((input) => !input.checkValidity() || (input.required && input.value.trim().length < Math.max(input.minLength, 1)));
     $$(".field", form).forEach((field) => field.classList.remove("is-invalid"));
     invalid.forEach((input) => input.closest(".field").classList.add("is-invalid"));
-    $("#clientError").textContent = invalid.length ? "Заполните компанию, контакт и корректный e-mail" : "";
+    $("#clientError").textContent = invalid.length ? "Проверьте компанию, контакт, e-mail и сумму сделок" : "";
     if (invalid.length) return;
 
     const data = Object.fromEntries(new FormData(form));
@@ -606,7 +610,7 @@ function openClientDrawer(clientId) {
 
   $("#drawerTitle").textContent = client.company;
   $("#drawerBody").innerHTML = `
-    <div class="company"><span class="company__logo" style="--color:${client.color}; width:52px; height:52px; font-size:18px">${initials(client.company)}</span><div><b>${escapeHtml(client.company)}</b><small>${escapeHtml(client.industry || "Отрасль не указана")}</small></div></div>
+    <div class="company"><span class="company__logo" style="--color:${client.color}; width:52px; height:52px; font-size:18px">${escapeHtml(initials(client.company))}</span><div><b>${escapeHtml(client.company)}</b><small>${escapeHtml(client.industry || "Отрасль не указана")}</small></div></div>
     <dl class="info-list">
       <div><dt>Контакт</dt><dd>${escapeHtml(client.contact)}</dd></div>
       <div><dt>E-mail</dt><dd>${escapeHtml(client.email)}</dd></div>
@@ -723,6 +727,11 @@ function initTaskForm() {
     if (title.length < 3) {
       $("#taskError").textContent = "Название должно быть не короче 3 символов";
       $(".field--title", form).classList.add("is-invalid");
+      return;
+    }
+    if (!form.elements.estimate.checkValidity()) {
+      $("#taskError").textContent = "Оценка должна быть целым числом от 1 до 200 часов";
+      form.elements.estimate.reportValidity();
       return;
     }
 

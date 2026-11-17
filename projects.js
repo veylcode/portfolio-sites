@@ -7,6 +7,9 @@ window.PORTFOLIO = {
       "Проектирую и разрабатываю сайты и веб-интерфейсы: от премиальных лендингов до рабочих приложений. Каждый проект — отдельная история со своим визуальным языком, продуманной анимацией и аккуратным кодом.",
     skills: ["HTML", "CSS", "JavaScript", "Адаптивная вёрстка", "UI-анимация", "Canvas и SVG", "Доступность", "UX-логика"],
     contacts: [
+      { label: "Telegram", value: "@veyldev", href: "https://t.me/veyldev" },
+      { label: "MAX", value: "+7 (925) 791 41 85", copy: "+79257914185" },
+      { label: "WhatsApp", value: "@veyldev", href: "https://wa.me/veyldev" },
       { label: "GitHub", value: "github.com/veylcode", href: "https://github.com/veylcode" }
     ]
   },

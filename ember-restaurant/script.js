@@ -249,6 +249,8 @@ function initBooking() {
   const months = ["янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"];
 
   const booking = { date: null, time: null, guests: 2 };
+  let confirmedBooking = null;
+  const submitButton = $('[type="submit"][form="bookingForm"]');
 
   const setSummary = (id, value) => {
     const element = $(id);
@@ -347,6 +349,7 @@ function initBooking() {
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
+    if (confirmedBooking) return;
     const error = $("#bookingError");
     const invalidInputs = $$("input[required]", form).filter((input) => !input.checkValidity());
     invalidInputs.forEach((input) => input.closest(".input").classList.add("is-invalid"));
@@ -365,13 +368,15 @@ function initBooking() {
     const code = `EM-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
     const dateLabel = booking.date.toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
     const name = form.elements.name.value.trim();
+    confirmedBooking = { ...booking, date: new Date(booking.date) };
+    submitButton.disabled = true;
 
     $("#ticketCode").textContent = code;
     $("#ticketText").textContent = `${name}, ждём вас ${dateLabel} в ${formatHour(booking.time)}. Стол на ${booking.guests} ${booking.guests === 1 ? "гостя" : "гостей"}.`;
     $(".summary__inner").hidden = true;
     $("#ticket").hidden = false;
 
-    $("#icsBtn").onclick = () => downloadCalendar(booking, code);
+    $("#icsBtn").onclick = () => downloadCalendar(confirmedBooking, code);
     document.dispatchEvent(
       new CustomEvent("booking:created", {
         detail: {
@@ -388,6 +393,8 @@ function initBooking() {
   });
 
   $("#newBooking").addEventListener("click", () => {
+    confirmedBooking = null;
+    submitButton.disabled = false;
     form.reset();
     Object.assign(booking, { date: null, time: null, guests: 2 });
     $("#guestsOut").textContent = 2;

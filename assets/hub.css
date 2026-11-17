@@ -757,6 +757,9 @@ main {
 
 .contact__item {
   display: grid;
+  width: 100%;
+  height: 100%;
+  align-content: start;
   gap: 4px;
   padding: 28px 24px;
   text-align: left;
@@ -767,7 +770,7 @@ main {
   transition: color 0.4s;
 }
 
-.contact__item:last-child {
+.contact__list li:last-child .contact__item {
   border-right: none;
 }
 
@@ -797,6 +800,12 @@ main {
 .contact__item b {
   font-size: 18px;
   font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.contact__hint {
+  font-size: 12px;
+  opacity: 0.6;
 }
 
 .footer {
@@ -944,6 +953,8 @@ main {
 
 .viewer__stage {
   flex: 1;
+  min-width: 0;
+  min-height: 0;
   position: relative;
   display: grid;
   place-items: center;
@@ -952,7 +963,9 @@ main {
 }
 
 .frame {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   flex: none;
   border-radius: 14px;
   overflow: hidden;
@@ -1076,7 +1089,7 @@ main {
     border-bottom: 1px solid var(--line);
   }
 
-  .contact__item:last-child {
+  .contact__list li:last-child .contact__item {
     border-bottom: none;
   }
 

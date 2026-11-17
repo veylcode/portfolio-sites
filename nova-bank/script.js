@@ -1,5 +1,6 @@
 const $ = (selector, scope = document) => scope.querySelector(selector);
 const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
 
 const STORAGE_KEY = "nova-demo-state";
 
@@ -95,7 +96,7 @@ function renderTransactions(highlightFirst = false) {
       (tx, index) => `
       <li class="${highlightFirst && index === 0 ? "is-new" : ""}">
         <span class="tx__icon">${tx.icon}</span>
-        <div class="tx__info"><b>${tx.title}</b><small>${tx.note}</small></div>
+        <div class="tx__info"><b>${escapeHtml(tx.title)}</b><small>${escapeHtml(tx.note)}</small></div>
         <span class="tx__amount ${tx.amount > 0 ? "is-income" : ""}">${tx.amount > 0 ? "+" : "−"}${money(Math.abs(tx.amount))}</span>
       </li>`
     )
@@ -301,7 +302,13 @@ function initCardTilt() {
 
 function initDesigner() {
   const cards = [$("#bankCard"), $("#previewCard")];
-  const saved = JSON.parse(localStorage.getItem("nova-card") || "{}");
+  let saved = {};
+  try {
+    const value = JSON.parse(localStorage.getItem("nova-card"));
+    if (value && typeof value === "object" && !Array.isArray(value)) saved = value;
+  } catch {
+    saved = {};
+  }
 
   const applyTheme = (theme) => {
     cards.forEach((card) => (card.dataset.theme = theme));
@@ -329,7 +336,7 @@ function initDesigner() {
   });
 
   if (saved.theme) applyTheme(saved.theme);
-  if (saved.name) {
+  if (typeof saved.name === "string" && saved.name) {
     $("#holderInput").value = saved.name;
     applyName(saved.name);
   }

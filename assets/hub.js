@@ -92,16 +92,27 @@ function renderProfile() {
   $("#ticker").innerHTML = [...tickerItems, ...tickerItems].map((item) => `<span>${escapeHtml(item)}</span>`).join("");
 
   $("#contacts").innerHTML = profile.contacts
-    .map(
-      (contact, index) => `
+    .map((contact, index) => {
+      const tag = contact.href ? "a" : "button";
+      const attributes = contact.href
+        ? `href="${escapeHtml(contact.href)}" target="_blank" rel="noopener"`
+        : `type="button" data-copy="${escapeHtml(contact.copy)}" aria-label="Скопировать номер ${escapeHtml(contact.label)} ${escapeHtml(contact.value)}"`;
+      return `
       <li class="reveal" style="transition-delay:${index * 80}ms">
-        <a class="contact__item" href="${contact.href}" target="_blank" rel="noopener">
+        <${tag} class="contact__item" ${attributes}>
           <small>${escapeHtml(contact.label)}</small>
           <b>${escapeHtml(contact.value)}</b>
-        </a>
-      </li>`
-    )
+          ${contact.copy ? '<span class="contact__hint">Скопировать номер</span>' : ""}
+        </${tag}>
+      </li>`;
+    })
     .join("");
+
+  $("#contacts").addEventListener("click", async (event) => {
+    const button = event.target.closest("button[data-copy]");
+    if (!button) return;
+    showToast((await copyText(button.dataset.copy)) ? "Номер MAX скопирован" : button.dataset.copy);
+  });
 }
 
 let activeCategory = "Все";
@@ -237,7 +248,7 @@ const viewer = (() => {
     const scale = Math.min((stage.clientWidth - padding - ring) / size.width, (stage.clientHeight - padding - ring) / size.height, 1);
     frame.style.width = `${size.width}px`;
     frame.style.height = `${size.height}px`;
-    frame.style.transform = `scale(${scale})`;
+    frame.style.transform = `translate(-50%, -50%) scale(${scale})`;
     frame.classList.toggle("is-mobile", device === "mobile");
     frame.classList.toggle("is-tablet", device === "tablet");
   }
