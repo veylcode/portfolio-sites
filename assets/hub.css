@@ -865,6 +865,8 @@ main {
 .viewer__info b {
   font-size: 17px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .viewer__info small {
@@ -937,6 +939,8 @@ main {
   height: 40px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   padding: 0 18px;
   border-radius: 100px;
   background: var(--accent);
@@ -1056,13 +1060,28 @@ main {
   .devices span {
     display: none;
   }
-
-  .viewer__open {
-    display: none;
-  }
 }
 
 @media (max-width: 900px) {
+  .viewer__bar {
+    flex-wrap: wrap;
+  }
+
+  .viewer__info {
+    flex: 1;
+  }
+
+  .devices {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .devices button {
+    flex: 1;
+    justify-content: center;
+  }
+
   .nav {
     display: none;
   }
@@ -1124,23 +1143,14 @@ main {
   }
 
   .viewer__bar {
-    flex-wrap: wrap;
     padding: 10px 14px;
+    gap: 10px;
   }
 
-  .viewer__info {
-    flex: 1;
-  }
-
-  .devices {
-    order: 3;
+  .viewer__actions {
     width: 100%;
-    justify-content: center;
-  }
-
-  .devices button {
-    flex: 1;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) 40px;
   }
 
   #viewerPrev,

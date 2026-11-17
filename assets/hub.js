@@ -259,7 +259,7 @@ const viewer = (() => {
     iframe.src = project.url;
     $("#viewerTitle").textContent = project.title;
     $("#viewerCategory").textContent = `${project.category} · ${index + 1} из ${projects.length}`;
-    $("#viewerOpen").href = project.url;
+    $("#viewerOpen").href = project.siteUrl || project.url;
     setAccent(project.tone);
     history.replaceState(null, "", `#work/${project.id}`);
   }
