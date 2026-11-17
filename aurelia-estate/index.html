@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurelia Estate — частная коллекция недвижимости</title>
+  <meta name="description" content="Aurelia Estate — агентство премиальной недвижимости. Дома, квартиры и пентхаусы с характером.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="account.css">
+</head>
+<body>
+  <div class="loader" id="loader">
+    <span class="loader__word">Aurelia</span>
+  </div>
+
+  <div class="cursor" id="cursor"></div>
+
+  <header class="header" id="header">
+    <a href="#top" class="logo">Aurelia<span>Estate</span></a>
+    <nav class="nav" id="nav">
+      <a href="#listings">Объекты</a>
+      <a href="#districts">Районы</a>
+      <a href="#mortgage">Ипотека</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <div class="header__actions">
+      <button class="account-btn" id="accountBtn" aria-label="Личный кабинет">
+        <span class="account-btn__label" data-when="out">Войти</span>
+        <span class="account-btn__avatar" data-when="in" data-auth-initials></span>
+      </button>
+      <button class="fav-counter" id="favCounter" aria-label="Избранное">
+        <svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2Z"/></svg>
+        <span id="favCount">0</span>
+      </button>
+      <button class="burger" id="burger" aria-label="Открыть меню"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="hero__text">
+        <p class="eyebrow fade-up">Частная коллекция · Москва и Подмосковье</p>
+        <h1 class="hero__title">
+          <span class="line"><span>Дома, в которых</span></span>
+          <span class="line"><span><em>живёт тишина</em></span></span>
+        </h1>
+        <p class="hero__lead fade-up">Мы отбираем не квадратные метры, а пространства с характером. Каждый объект в коллекции лично проверен нашими архитекторами.</p>
+      </div>
+      <div class="hero__media">
+        <div class="hero__image" id="heroImage">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80" alt="Современный дом с бассейном">
+        </div>
+        <div class="hero__badge">
+          <span class="hero__badge-num">№ 1</span>
+          <span>Резиденция «Лиственница»<br>Николина Гора</span>
+        </div>
+      </div>
+
+      <form class="search fade-up" id="searchForm">
+        <label class="search__field">
+          <span>Тип объекта</span>
+          <select name="type">
+            <option value="all">Любой</option>
+            <option value="house">Дом</option>
+            <option value="apartment">Квартира</option>
+            <option value="penthouse">Пентхаус</option>
+          </select>
+        </label>
+        <label class="search__field">
+          <span>Бюджет до</span>
+          <select name="budget">
+            <option value="Infinity">Без ограничений</option>
+            <option value="80000000">80 млн ₽</option>
+            <option value="150000000">150 млн ₽</option>
+            <option value="300000000">300 млн ₽</option>
+          </select>
+        </label>
+        <label class="search__field">
+          <span>Спальни</span>
+          <select name="rooms">
+            <option value="0">Любое число</option>
+            <option value="2">от 2</option>
+            <option value="3">от 3</option>
+            <option value="4">от 4</option>
+          </select>
+        </label>
+        <button class="search__submit" type="submit">
+          Найти
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+    </section>
+
+    <section class="stats">
+      <div class="stat reveal"><span class="stat__num" data-count="214">0</span><span class="stat__label">объектов в коллекции</span></div>
+      <div class="stat reveal"><span class="stat__num" data-count="17">0</span><span class="stat__label">лет на рынке</span></div>
+      <div class="stat reveal"><span class="stat__num" data-count="38">0</span><span class="stat__label">дней — средний срок сделки</span></div>
+      <div class="stat reveal"><span class="stat__num" data-count="96">0</span><span class="stat__label">% клиентов приходят по рекомендации</span></div>
+    </section>
+
+    <section class="listings" id="listings">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow reveal">Коллекция</p>
+          <h2 class="section-title reveal">Избранные <em>объекты</em></h2>
+        </div>
+        <div class="listings__controls reveal">
+          <div class="chips" id="typeChips">
+            <button class="chip is-active" data-type="all">Все</button>
+            <button class="chip" data-type="house">Дома</button>
+            <button class="chip" data-type="apartment">Квартиры</button>
+            <button class="chip" data-type="penthouse">Пентхаусы</button>
+          </div>
+          <select class="sort" id="sortSelect" aria-label="Сортировка">
+            <option value="featured">По умолчанию</option>
+            <option value="price-asc">Сначала дешевле</option>
+            <option value="price-desc">Сначала дороже</option>
+            <option value="area-desc">По площади</option>
+          </select>
+        </div>
+      </div>
+      <p class="listings__summary" id="listingsSummary"></p>
+      <div class="grid" id="listingsGrid"></div>
+      <div class="empty" id="emptyState" hidden>
+        <p>По этим параметрам ничего не нашлось.</p>
+        <button class="link-btn" id="resetFilters">Сбросить фильтры</button>
+      </div>
+    </section>
+
+    <section class="districts" id="districts">
+      <div class="districts__sticky">
+        <div class="districts__track" id="districtsTrack">
+          <div class="districts__intro">
+            <p class="eyebrow">География</p>
+            <h2 class="section-title">Районы, которые <em>мы знаем</em> до каждой улицы</h2>
+            <p class="muted">Прокрутите, чтобы пройтись по локациям.</p>
+          </div>
+          <article class="district">
+            <div class="district__img"><img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy"></div>
+            <span class="district__index">1</span>
+            <h3>Остоженка</h3>
+            <p>Тихие переулки «Золотой мили» в десяти минутах от Кремля.</p>
+          </article>
+          <article class="district">
+            <div class="district__img"><img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy"></div>
+            <span class="district__index">2</span>
+            <h3>Николина Гора</h3>
+            <p>Сосновый бор, излучина Москвы-реки и соседство с историей.</p>
+          </article>
+          <article class="district">
+            <div class="district__img"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy"></div>
+            <span class="district__index">3</span>
+            <h3>Патриаршие</h3>
+            <p>Камерные клубные дома и самая живая городская атмосфера.</p>
+          </article>
+          <article class="district">
+            <div class="district__img"><img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy"></div>
+            <span class="district__index">4</span>
+            <h3>Барвиха</h3>
+            <p>Резиденции на больших участках с собственной инфраструктурой.</p>
+          </article>
+          <article class="district">
+            <div class="district__img"><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80" alt="" loading="lazy"></div>
+            <span class="district__index">5</span>
+            <h3>Хамовники</h3>
+            <p>Набережные, монастыри и парки — город в спокойном темпе.</p>
+          </article>
+        </div>
+        <div class="districts__progress"><span id="districtsProgress"></span></div>
+      </div>
+    </section>
+
+    <section class="approach">
+      <p class="eyebrow reveal">Подход</p>
+      <h2 class="section-title reveal">Три шага к ключам — <em>без суеты</em></h2>
+      <ol class="steps">
+        <li class="step reveal">
+          <span class="step__num">I</span>
+          <h3>Знакомство</h3>
+          <p>Час разговора о том, как вы живёте. Мы составляем профиль пространства, а не список требований.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step__num">II</span>
+          <h3>Подборка</h3>
+          <p>Пять–семь объектов, включая закрытые продажи, которых нет в открытом доступе.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step__num">III</span>
+          <h3>Сделка</h3>
+          <p>Юридическая проверка, переговоры и сопровождение до передачи ключей.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="mortgage" id="mortgage">
+      <div class="mortgage__intro">
+        <p class="eyebrow reveal">Финансы</p>
+        <h2 class="section-title reveal">Калькулятор <em>ипотеки</em></h2>
+        <p class="muted reveal">Предварительный расчёт аннуитетного платежа. Точные условия подберёт наш финансовый консультант.</p>
+      </div>
+      <div class="calc reveal">
+        <div class="calc__inputs">
+          <label class="range">
+            <span class="range__head"><span>Стоимость объекта</span><output id="priceOut"></output></span>
+            <input type="range" id="priceInput" min="20000000" max="400000000" step="5000000" value="120000000">
+          </label>
+          <label class="range">
+            <span class="range__head"><span>Первоначальный взнос</span><output id="downOut"></output></span>
+            <input type="range" id="downInput" min="10" max="90" step="5" value="30">
+          </label>
+          <label class="range">
+            <span class="range__head"><span>Срок</span><output id="termOut"></output></span>
+            <input type="range" id="termInput" min="3" max="30" step="1" value="15">
+          </label>
+          <label class="range">
+            <span class="range__head"><span>Ставка</span><output id="rateOut"></output></span>
+            <input type="range" id="rateInput" min="4" max="24" step="0.5" value="14">
+          </label>
+        </div>
+        <div class="calc__result">
+          <span class="calc__label">Ежемесячный платёж</span>
+          <span class="calc__payment" id="paymentOut">0 ₽</span>
+          <div class="calc__bar"><span id="principalBar"></span></div>
+          <div class="calc__legend">
+            <span><i class="dot dot--dark"></i>Тело кредита <b id="principalOut"></b></span>
+            <span><i class="dot"></i>Проценты <b id="interestOut"></b></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="contact__intro">
+        <p class="eyebrow reveal">Связаться</p>
+        <h2 class="section-title reveal">Расскажите, <em>каким</em> вы видите свой дом</h2>
+        <div class="contact__details reveal">
+          <a href="tel:+74950000000">+7 495 000-00-00</a>
+          <a href="mailto:hello@aurelia.estate">hello@aurelia.estate</a>
+          <span>Москва, Малый Власьевский пер., 7</span>
+        </div>
+      </div>
+      <form class="form reveal" id="contactForm" novalidate>
+        <label class="form__field">
+          <input type="text" name="name" placeholder=" " required minlength="2">
+          <span>Ваше имя</span>
+          <small class="form__error">Укажите имя</small>
+        </label>
+        <label class="form__field">
+          <input type="tel" name="phone" placeholder=" " required pattern="[\d\s\+\-\(\)]{10,}">
+          <span>Телефон</span>
+          <small class="form__error">Проверьте номер телефона</small>
+        </label>
+        <label class="form__field">
+          <input type="text" name="interest" id="interestField" placeholder=" ">
+          <span>Интересующий объект</span>
+        </label>
+        <label class="form__field">
+          <textarea name="message" rows="3" placeholder=" "></textarea>
+          <span>Комментарий</span>
+        </label>
+        <button class="btn" type="submit">Отправить заявку</button>
+        <p class="form__note">Демо-форма: данные никуда не отправляются.</p>
+        <div class="form__success" id="formSuccess" hidden>
+          <h3>Спасибо!</h3>
+          <p>Персональный консультант свяжется с вами в течение часа.</p>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="footer__logo">Aurelia</span>
+    <div class="footer__row">
+      <span>© 2026 Aurelia Estate</span>
+      <span>Концепт для портфолио</span>
+      <a href="#top">Наверх ↑</a>
+    </div>
+  </footer>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal__backdrop" data-close></div>
+    <article class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" data-close aria-label="Закрыть">×</button>
+      <div class="modal__gallery">
+        <div class="modal__main"><img id="modalImage" src="" alt=""></div>
+        <div class="modal__thumbs" id="modalThumbs"></div>
+      </div>
+      <div class="modal__info">
+        <p class="eyebrow" id="modalDistrict"></p>
+        <h3 class="modal__title" id="modalTitle"></h3>
+        <p class="modal__price" id="modalPrice"></p>
+        <dl class="modal__specs" id="modalSpecs"></dl>
+        <p class="modal__desc" id="modalDesc"></p>
+        <button class="btn" id="modalRequest">Записаться на просмотр</button>
+      </div>
+    </article>
+  </div>
+
+  <div class="auth" id="authModal" aria-hidden="true">
+    <div class="auth__backdrop" data-close-auth></div>
+    <div class="auth__panel" role="dialog" aria-modal="true" aria-label="Вход в личный кабинет">
+      <aside class="auth__visual">
+        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=80" alt="">
+        <div class="auth__quote">
+          <p>«Дом — это не адрес. Это то, как вы просыпаетесь по утрам».</p>
+          <span>Aurelia Private Client</span>
+        </div>
+      </aside>
+
+      <div class="auth__body" data-auth-root data-view="login">
+        <button class="auth__close" data-close-auth aria-label="Закрыть">×</button>
+        <p class="eyebrow">Private Client</p>
+        <h2 class="auth__title">
+          <span data-pane="login">С возвращением</span>
+          <span data-pane="register" hidden>Добро <em>пожаловать</em></span>
+          <span data-pane="reset" hidden>Восстановление</span>
+        </h2>
+        <div class="auth__tabs">
+          <button data-auth-switch="login">Вход</button>
+          <button data-auth-switch="register">Регистрация</button>
+        </div>
+
+        <form class="auth-form" data-auth-form="login" data-pane="login">
+          <label class="auth-field" data-field>
+            <input type="email" name="email" placeholder=" " autocomplete="email">
+            <span>E-mail</span>
+            <small data-field-error></small>
+          </label>
+          <label class="auth-field" data-field>
+            <input type="password" name="password" placeholder=" " autocomplete="current-password">
+            <span>Пароль</span>
+            <button class="auth-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <small data-field-error></small>
+          </label>
+          <div class="auth-form__row">
+            <label class="auth-check"><input type="checkbox" name="remember" checked><i></i>Запомнить меня</label>
+            <button class="link-btn" data-auth-switch="reset">Забыли пароль?</button>
+          </div>
+          <p class="auth-form__error" data-form-error hidden></p>
+          <button class="btn btn--full" type="submit">Войти</button>
+          <button class="auth-demo" data-auth-demo>Демо-вход без регистрации</button>
+        </form>
+
+        <form class="auth-form" data-auth-form="register" data-pane="register" hidden>
+          <label class="auth-field" data-field>
+            <input type="text" name="name" placeholder=" " autocomplete="name">
+            <span>Имя и фамилия</span>
+            <small data-field-error></small>
+          </label>
+          <label class="auth-field" data-field>
+            <input type="email" name="email" placeholder=" " autocomplete="email">
+            <span>E-mail</span>
+            <small data-field-error></small>
+          </label>
+          <label class="auth-field" data-field>
+            <input type="password" name="password" placeholder=" " autocomplete="new-password">
+            <span>Пароль</span>
+            <button class="auth-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <small data-field-error></small>
+          </label>
+          <div class="strength" data-strength><i></i><i></i><i></i><i></i><span data-strength-label></span></div>
+          <label class="auth-field" data-field>
+            <input type="password" name="confirm" placeholder=" " autocomplete="new-password">
+            <span>Повторите пароль</span>
+            <small data-field-error></small>
+          </label>
+          <label class="auth-check" data-field>
+            <input type="checkbox" name="agree"><i></i>Согласен с условиями обработки данных
+            <small data-field-error></small>
+          </label>
+          <p class="auth-form__error" data-form-error hidden></p>
+          <button class="btn btn--full" type="submit">Создать аккаунт</button>
+        </form>
+
+        <form class="auth-form" data-auth-form="reset" data-pane="reset" hidden>
+          <p class="muted">Укажите e-mail, привязанный к аккаунту, — мы пришлём ссылку для смены пароля.</p>
+          <label class="auth-field" data-field>
+            <input type="email" name="email" placeholder=" " autocomplete="email">
+            <span>E-mail</span>
+            <small data-field-error></small>
+          </label>
+          <p class="auth-form__success" data-form-success hidden></p>
+          <button class="btn btn--full" type="submit">Отправить ссылку</button>
+          <button class="link-btn" data-auth-switch="login">← Вернуться ко входу</button>
+        </form>
+
+        <p class="auth__note">Демо-режим: аккаунты хранятся только в вашем браузере, пароли — в виде хеша.</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="cabinet" id="cabinet" aria-hidden="true">
+    <header class="cabinet__head">
+      <span class="logo">Aurelia<span>Estate</span></span>
+      <button class="cabinet__close" data-close-cabinet>Закрыть ×</button>
+    </header>
+    <div class="cabinet__inner">
+      <div class="cabinet__hello">
+        <span class="cabinet__avatar" data-auth-initials></span>
+        <div>
+          <p class="eyebrow">Личный кабинет</p>
+          <h2 class="cabinet__title"><span id="cabinetGreeting">Добрый день</span>, <em data-auth-first-name></em></h2>
+          <p class="muted">Клиент с <span data-auth-since></span></p>
+        </div>
+      </div>
+
+      <nav class="cabinet__tabs" id="cabinetTabs">
+        <button class="is-active" data-tab="favorites">Избранное <sup id="cabFavCount">0</sup></button>
+        <button data-tab="requests">Заявки <sup id="cabReqCount">0</sup></button>
+        <button data-tab="profile">Профиль</button>
+      </nav>
+
+      <div class="cabinet__panel is-active" data-panel="favorites">
+        <div class="cab-grid" id="cabFavorites"></div>
+      </div>
+
+      <div class="cabinet__panel" data-panel="requests">
+        <ul class="cab-requests" id="cabRequests"></ul>
+      </div>
+
+      <div class="cabinet__panel" data-panel="profile">
+        <div class="cab-settings">
+          <form class="auth-form" data-auth-form="profile">
+            <h3>Личные данные</h3>
+            <label class="auth-field" data-field>
+              <input type="text" name="name" placeholder=" ">
+              <span>Имя и фамилия</span>
+              <small data-field-error></small>
+            </label>
+            <label class="auth-field" data-field>
+              <input type="email" name="email" placeholder=" " readonly>
+              <span>E-mail</span>
+            </label>
+            <label class="auth-field" data-field>
+              <input type="tel" name="phone" placeholder=" ">
+              <span>Телефон</span>
+              <small data-field-error></small>
+            </label>
+            <p class="auth-form__success" data-form-success hidden></p>
+            <button class="btn" type="submit">Сохранить</button>
+          </form>
+
+          <form class="auth-form" data-auth-form="password">
+            <h3>Смена пароля</h3>
+            <label class="auth-field" data-field>
+              <input type="password" name="current" placeholder=" " autocomplete="current-password">
+              <span>Текущий пароль</span>
+              <small data-field-error></small>
+            </label>
+            <label class="auth-field" data-field>
+              <input type="password" name="password" placeholder=" " autocomplete="new-password">
+              <span>Новый пароль</span>
+              <button class="auth-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+              <small data-field-error></small>
+            </label>
+            <div class="strength" data-strength><i></i><i></i><i></i><i></i><span data-strength-label></span></div>
+            <label class="auth-field" data-field>
+              <input type="password" name="confirm" placeholder=" " autocomplete="new-password">
+              <span>Повторите пароль</span>
+              <small data-field-error></small>
+            </label>
+            <p class="auth-form__error" data-form-error hidden></p>
+            <p class="auth-form__success" data-form-success hidden></p>
+            <button class="btn" type="submit">Обновить пароль</button>
+          </form>
+        </div>
+        <button class="link-btn cabinet__logout" data-auth-logout>Выйти из аккаунта</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="note-toast" id="noteToast" role="status"></div>
+
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+  <script src="account.js"></script>
+</body>
+</html>

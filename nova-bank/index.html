@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Bank — банк, который двигается вместе с вами</title>
+  <meta name="description" content="Nova Bank — концепт цифрового банка. Демонстрационный интерфейс без реальных операций.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Unbounded:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="account.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true">
+    <span class="aurora__orb aurora__orb--violet"></span>
+    <span class="aurora__orb aurora__orb--lime"></span>
+    <span class="aurora__orb aurora__orb--blue"></span>
+  </div>
+
+  <header class="header" id="header">
+    <a href="#top" class="logo"><span class="logo__mark"></span>nova</a>
+    <nav class="nav" id="nav">
+      <a href="#features">Возможности</a>
+      <a href="#demo">Демо</a>
+      <a href="#exchange">Обмен</a>
+      <a href="#plans">Тарифы</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+    <div class="header__account">
+      <button class="btn btn--small" data-when="out" data-open-auth="register">Открыть счёт</button>
+      <button class="user-pill" data-when="in" id="userPill">
+        <span class="user-pill__avatar" data-auth-initials></span>
+        <span data-auth-first-name></span>
+      </button>
+    </div>
+    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="hero__content">
+        <span class="pill"><span class="pill__dot"></span>Концепт цифрового банка · 2026</span>
+        <h1 class="hero__title">
+          <span class="split">Деньги</span>
+          <span class="split">со скоростью</span>
+          <span class="split gradient-text">мысли</span>
+        </h1>
+        <p class="hero__lead">Переводы за секунду, кэшбэк, который действительно ощущается, и аналитика, которая говорит на человеческом языке.</p>
+        <div class="hero__actions">
+          <a href="#demo" class="btn">Попробовать демо</a>
+          <a href="#features" class="btn btn--ghost">Узнать больше</a>
+        </div>
+        <ul class="hero__facts">
+          <li><b data-count="0.4" data-decimals="1">0</b><span>сек — средний перевод</span></li>
+          <li><b data-count="12" data-suffix="%">0</b><span>кэшбэк в категориях</span></li>
+          <li><b data-count="24" data-suffix="/7">0</b><span>поддержка в чате</span></li>
+        </ul>
+      </div>
+
+      <div class="hero__visual">
+        <div class="card-stage" id="cardStage">
+          <div class="bank-card" id="bankCard" data-theme="violet">
+            <div class="bank-card__shine"></div>
+            <div class="bank-card__top">
+              <span class="bank-card__logo">nova</span>
+              <svg class="bank-card__contactless" viewBox="0 0 24 24"><path d="M8 7c2.5 3 2.5 7 0 10M12 5c3.5 4 3.5 10 0 14M16 3c4.5 5 4.5 13 0 18"/></svg>
+            </div>
+            <div class="bank-card__chip"></div>
+            <div class="bank-card__number">4821 •••• •••• 0726</div>
+            <div class="bank-card__bottom">
+              <span id="cardHolder">ALEX NOVAK</span>
+              <span>09/30</span>
+            </div>
+          </div>
+        </div>
+        <div class="float-note float-note--top">
+          <span class="float-note__icon">↗</span>
+          <div><b>+2 340 ₽</b><small>Кэшбэк за октябрь</small></div>
+        </div>
+        <div class="float-note float-note--bottom">
+          <span class="float-note__icon float-note__icon--ok">✓</span>
+          <div><b>Перевод выполнен</b><small>Марии · 0,3 сек</small></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span>Без комиссий за переводы</span><span>✦</span>
+        <span>Мультивалютные счета</span><span>✦</span>
+        <span>Вклады до 18% годовых</span><span>✦</span>
+        <span>Виртуальные карты за 10 секунд</span><span>✦</span>
+        <span>Без комиссий за переводы</span><span>✦</span>
+        <span>Мультивалютные счета</span><span>✦</span>
+        <span>Вклады до 18% годовых</span><span>✦</span>
+        <span>Виртуальные карты за 10 секунд</span><span>✦</span>
+      </div>
+    </div>
+
+    <section class="section" id="features">
+      <div class="section__head reveal">
+        <span class="label">1 — Возможности</span>
+        <h2 class="title">Всё, что нужно.<br><span class="muted">Ничего лишнего.</span></h2>
+      </div>
+      <div class="bento">
+        <article class="tile tile--wide reveal" data-glow>
+          <span class="tile__kicker">Переводы</span>
+          <h3>Мгновенно — по номеру, QR или ссылке</h3>
+          <div class="transfer-anim">
+            <span class="transfer-anim__avatar">А</span>
+            <span class="transfer-anim__line"><i></i></span>
+            <span class="transfer-anim__avatar transfer-anim__avatar--lime">М</span>
+          </div>
+        </article>
+        <article class="tile reveal" data-glow>
+          <span class="tile__kicker">Кэшбэк</span>
+          <h3>До 12% в любимых категориях</h3>
+          <div class="cashback-num"><span data-count="12" data-suffix="%">0</span></div>
+        </article>
+        <article class="tile reveal" data-glow>
+          <span class="tile__kicker">Безопасность</span>
+          <h3>Биометрия и одноразовые карты</h3>
+          <div class="shield">
+            <svg viewBox="0 0 48 48"><path d="M24 4 8 10v12c0 10 7 18 16 22 9-4 16-12 16-22V10L24 4Z"/><path class="shield__check" d="m17 24 5 5 10-10"/></svg>
+          </div>
+        </article>
+        <article class="tile reveal" data-glow>
+          <span class="tile__kicker">Валюты</span>
+          <h3>32 валюты в одном приложении</h3>
+          <div class="currency-orbit">
+            <span>₽</span><span>$</span><span>€</span><span>¥</span>
+          </div>
+        </article>
+        <article class="tile tile--wide reveal" data-glow>
+          <span class="tile__kicker">Аналитика</span>
+          <h3>Расходы, разложенные по полочкам</h3>
+          <div class="mini-bars">
+            <i style="--h: 40%"></i><i style="--h: 72%"></i><i style="--h: 55%"></i><i style="--h: 90%"></i><i style="--h: 35%"></i><i style="--h: 64%"></i><i style="--h: 80%"></i><i style="--h: 48%"></i><i style="--h: 68%"></i><i style="--h: 58%"></i>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="demo">
+      <div class="section__head reveal">
+        <span class="label">2 — Демо</span>
+        <h2 class="title">Попробуйте интерфейс<br><span class="muted">прямо здесь.</span></h2>
+        <p class="note">Демонстрационный режим: деньги ненастоящие, операции сохраняются только в вашем браузере.</p>
+      </div>
+
+      <div class="app reveal">
+        <div class="app__gate" data-when="out">
+          <div class="app__gate-card">
+            <span class="app__gate-icon">
+              <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            </span>
+            <h3>Кабинет защищён</h3>
+            <p>Войдите или откройте счёт — у каждого пользователя свой демо-баланс и история операций.</p>
+            <div class="app__gate-actions">
+              <button class="btn" data-open-auth="login">Войти</button>
+              <button class="btn btn--ghost" data-auth-demo>Демо-вход</button>
+            </div>
+          </div>
+        </div>
+        <aside class="app__side">
+          <div class="app__user">
+            <span class="avatar" data-auth-initials></span>
+            <div><b data-auth-name></b><small>Премиум</small></div>
+          </div>
+          <div class="app__tabs" role="tablist">
+            <button class="app__tab is-active" data-tab="overview" role="tab">
+              <svg viewBox="0 0 24 24"><path d="M4 13h6V4H4v9Zm0 7h6v-5H4v5Zm10 0h6v-9h-6v9Zm0-16v5h6V4h-6Z"/></svg>Обзор
+            </button>
+            <button class="app__tab" data-tab="transfer" role="tab">
+              <svg viewBox="0 0 24 24"><path d="M4 8h14l-4-4M20 16H6l4 4"/></svg>Переводы
+            </button>
+            <button class="app__tab" data-tab="savings" role="tab">
+              <svg viewBox="0 0 24 24"><path d="M12 3v18M5 8h10a3 3 0 0 1 0 6H8a3 3 0 0 0 0 6h11"/></svg>Копилки
+            </button>
+          </div>
+          <button class="app__reset" id="resetDemo">Сбросить демо</button>
+        </aside>
+
+        <div class="app__main">
+          <div class="app__panel is-active" data-panel="overview">
+            <div class="balance">
+              <span class="balance__label">Общий баланс</span>
+              <span class="balance__value" id="balanceValue">0 ₽</span>
+              <span class="balance__delta">+4,2% за месяц</span>
+            </div>
+            <div class="overview-grid">
+              <div class="widget">
+                <div class="widget__head"><b>Расходы по неделям</b><small>Ноябрь</small></div>
+                <div class="chart" id="weekChart"></div>
+              </div>
+              <div class="widget">
+                <div class="widget__head"><b>Категории</b><small id="spentTotal"></small></div>
+                <div class="donut">
+                  <svg viewBox="0 0 42 42" id="donut"></svg>
+                  <ul class="donut__legend" id="donutLegend"></ul>
+                </div>
+              </div>
+            </div>
+            <div class="widget">
+              <div class="widget__head"><b>Последние операции</b><small>Сегодня и ранее</small></div>
+              <ul class="transactions" id="transactions"></ul>
+            </div>
+          </div>
+
+          <div class="app__panel" data-panel="transfer">
+            <h3 class="panel-title">Новый перевод</h3>
+            <div class="contacts" id="contacts"></div>
+            <form class="transfer-form" id="transferForm">
+              <label class="field">
+                <span>Получатель</span>
+                <input type="text" name="recipient" id="recipientInput" placeholder="Имя или номер телефона" required>
+              </label>
+              <label class="field field--amount">
+                <span>Сумма</span>
+                <input type="number" name="amount" min="1" step="1" placeholder="0" required>
+                <em>₽</em>
+              </label>
+              <div class="quick-amounts">
+                <button type="button" data-amount="500">500</button>
+                <button type="button" data-amount="1500">1 500</button>
+                <button type="button" data-amount="5000">5 000</button>
+                <button type="button" data-amount="10000">10 000</button>
+              </div>
+              <label class="field">
+                <span>Сообщение</span>
+                <input type="text" name="message" placeholder="За кофе ☕">
+              </label>
+              <p class="form-error" id="transferError"></p>
+              <button class="btn btn--full" type="submit">Перевести без комиссии</button>
+            </form>
+            <div class="success" id="transferSuccess" hidden>
+              <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="m15 27 7 7 15-15"/></svg>
+              <h4 id="successText">Готово</h4>
+              <p>Демо-перевод выполнен за 0,3 секунды</p>
+              <button class="btn btn--ghost" id="successBack">Новый перевод</button>
+            </div>
+          </div>
+
+          <div class="app__panel" data-panel="savings">
+            <h3 class="panel-title">Копилки</h3>
+            <div class="goals" id="goals"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section designer" id="designer">
+      <div class="designer__preview reveal">
+        <div class="bank-card bank-card--static" id="previewCard" data-theme="violet">
+          <div class="bank-card__shine"></div>
+          <div class="bank-card__top">
+            <span class="bank-card__logo">nova</span>
+            <svg class="bank-card__contactless" viewBox="0 0 24 24"><path d="M8 7c2.5 3 2.5 7 0 10M12 5c3.5 4 3.5 10 0 14M16 3c4.5 5 4.5 13 0 18"/></svg>
+          </div>
+          <div class="bank-card__chip"></div>
+          <div class="bank-card__number">4821 •••• •••• 0726</div>
+          <div class="bank-card__bottom">
+            <span id="previewHolder">ALEX NOVAK</span>
+            <span>09/30</span>
+          </div>
+        </div>
+      </div>
+      <div class="designer__controls reveal">
+        <span class="label">3 — Ваша карта</span>
+        <h2 class="title">Карта, которая <span class="gradient-text">похожа на вас</span></h2>
+        <p class="muted">Выберите оформление и имя — карта в начале страницы обновится тоже.</p>
+        <div class="swatches" id="swatches">
+          <button class="swatch is-active" data-theme="violet" aria-label="Фиолетовая"></button>
+          <button class="swatch" data-theme="lime" aria-label="Лаймовая"></button>
+          <button class="swatch" data-theme="graphite" aria-label="Графитовая"></button>
+          <button class="swatch" data-theme="ocean" aria-label="Океан"></button>
+          <button class="swatch" data-theme="sunset" aria-label="Закат"></button>
+        </div>
+        <label class="field">
+          <span>Имя на карте</span>
+          <input type="text" id="holderInput" maxlength="22" value="Alex Novak">
+        </label>
+      </div>
+    </section>
+
+    <section class="section" id="exchange">
+      <div class="exchange reveal">
+        <div class="exchange__info">
+          <span class="label">4 — Обмен</span>
+          <h2 class="title">Курс без<br><span class="muted">сюрпризов.</span></h2>
+          <p class="muted">Курсы демонстрационные и обновляются каждые несколько секунд, чтобы показать живой интерфейс.</p>
+        </div>
+        <div class="converter">
+          <label class="converter__row">
+            <span>Отдаёте</span>
+            <div class="converter__input">
+              <input type="number" id="fromAmount" value="10000" min="0">
+              <select id="fromCurrency"></select>
+            </div>
+          </label>
+          <button class="converter__swap" id="swapCurrency" aria-label="Поменять местами">⇅</button>
+          <label class="converter__row">
+            <span>Получаете</span>
+            <div class="converter__input">
+              <output id="toAmount">0</output>
+              <select id="toCurrency"></select>
+            </div>
+          </label>
+          <p class="converter__rate" id="rateLine"></p>
+          <ul class="rates" id="ratesList"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="plans">
+      <div class="section__head section__head--center reveal">
+        <span class="label">5 — Тарифы</span>
+        <h2 class="title">Выберите свой ритм</h2>
+        <div class="billing-toggle" id="billingToggle">
+          <button class="is-active" data-billing="month">Помесячно</button>
+          <button data-billing="year">Ежегодно <i>−20%</i></button>
+          <span class="billing-toggle__thumb"></span>
+        </div>
+      </div>
+      <div class="plans">
+        <article class="plan reveal">
+          <h3>Base</h3>
+          <p class="plan__price"><span data-month="0" data-year="0">0</span> ₽<small>/мес</small></p>
+          <ul>
+            <li>Карта и счёт бесплатно</li>
+            <li>Переводы до 100 000 ₽</li>
+            <li>Кэшбэк 1% на всё</li>
+          </ul>
+          <a href="#demo" class="btn btn--ghost btn--full">Выбрать</a>
+        </article>
+        <article class="plan plan--featured reveal">
+          <span class="plan__badge">Популярный</span>
+          <h3>Plus</h3>
+          <p class="plan__price"><span data-month="299" data-year="239">299</span> ₽<small>/мес</small></p>
+          <ul>
+            <li>Всё из Base</li>
+            <li>Кэшбэк до 7% в категориях</li>
+            <li>Обмен валют по биржевому курсу</li>
+            <li>Повышенная ставка по копилкам</li>
+          </ul>
+          <a href="#demo" class="btn btn--full">Выбрать</a>
+        </article>
+        <article class="plan reveal">
+          <h3>Infinite</h3>
+          <p class="plan__price"><span data-month="1490" data-year="1190">1 490</span> ₽<small>/мес</small></p>
+          <ul>
+            <li>Всё из Plus</li>
+            <li>Кэшбэк до 12%</li>
+            <li>Личный менеджер 24/7</li>
+            <li>Бизнес-залы в аэропортах</li>
+          </ul>
+          <a href="#demo" class="btn btn--ghost btn--full">Выбрать</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq">
+      <div class="section__head reveal">
+        <span class="label">6 — Вопросы</span>
+        <h2 class="title">Частые вопросы</h2>
+      </div>
+      <div class="accordion" id="accordion">
+        <details class="reveal" open>
+          <summary>Это настоящий банк?</summary>
+          <p>Нет. Nova Bank — концепт для портфолио. Все суммы, переводы и курсы — демонстрационные, реальные операции не выполняются.</p>
+        </details>
+        <details class="reveal">
+          <summary>Как быстро можно открыть счёт?</summary>
+          <p>В концепции — за 5 минут: фото паспорта, селфи и подпись в приложении. Карта доставляется курьером на следующий день.</p>
+        </details>
+        <details class="reveal">
+          <summary>Как устроен кэшбэк?</summary>
+          <p>Каждый месяц вы выбираете три категории с повышенным кэшбэком. Начисление приходит рублями, а не баллами.</p>
+        </details>
+        <details class="reveal">
+          <summary>Что такое копилки?</summary>
+          <p>Отдельные накопительные счета под конкретные цели с ежедневным начислением процентов и автопополнением.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="cta reveal">
+      <h2 class="cta__title">Будущее банкинга<br><span class="gradient-text">уже в кармане</span></h2>
+      <a href="#demo" class="btn">Начать в демо-режиме</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a href="#top" class="logo"><span class="logo__mark"></span>nova</a>
+    <p>Nova Bank — вымышленный бренд. Концепт создан для портфолио, не является финансовой организацией и не проводит операций.</p>
+    <span>© 2026</span>
+  </footer>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <div class="glass-modal" id="authModal" aria-hidden="true">
+    <div class="glass-modal__backdrop" data-close-auth></div>
+    <div class="glass-modal__panel auth-card" data-auth-root data-view="login" role="dialog" aria-modal="true" aria-label="Вход в Nova Bank">
+      <button class="glass-modal__close" data-close-auth aria-label="Закрыть">
+        <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+      <div class="auth-card__brand"><span class="logo__mark"></span>nova</div>
+
+      <div class="auth-card__switch">
+        <button data-auth-switch="login">Вход</button>
+        <button data-auth-switch="register">Открыть счёт</button>
+        <span class="auth-card__thumb"></span>
+      </div>
+
+      <form class="nova-form" data-auth-form="login" data-pane="login">
+        <h3>С возвращением</h3>
+        <label class="nova-field" data-field>
+          <span>E-mail</span>
+          <input type="email" name="email" placeholder="you@email.com" autocomplete="email">
+          <small data-field-error></small>
+        </label>
+        <label class="nova-field" data-field>
+          <span>Пароль</span>
+          <input type="password" name="password" placeholder="••••••••" autocomplete="current-password">
+          <button class="nova-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          <small data-field-error></small>
+        </label>
+        <div class="nova-form__row">
+          <label class="nova-switch"><input type="checkbox" name="remember" checked><i></i>Запомнить устройство</label>
+          <button class="nova-link" data-auth-switch="reset">Забыли пароль?</button>
+        </div>
+        <p class="nova-form__error" data-form-error hidden></p>
+        <button class="btn btn--full" type="submit">Войти</button>
+        <div class="nova-divider"><span>или</span></div>
+        <button class="btn btn--ghost btn--full" data-auth-demo>⚡ Демо-вход за секунду</button>
+      </form>
+
+      <form class="nova-form" data-auth-form="register" data-pane="register" hidden>
+        <h3>Счёт за 2 минуты</h3>
+        <label class="nova-field" data-field>
+          <span>Имя и фамилия</span>
+          <input type="text" name="name" placeholder="Алекс Новак" autocomplete="name">
+          <small data-field-error></small>
+        </label>
+        <label class="nova-field" data-field>
+          <span>E-mail</span>
+          <input type="email" name="email" placeholder="you@email.com" autocomplete="email">
+          <small data-field-error></small>
+        </label>
+        <label class="nova-field" data-field>
+          <span>Пароль</span>
+          <input type="password" name="password" placeholder="Минимум 8 символов" autocomplete="new-password">
+          <button class="nova-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          <small data-field-error></small>
+        </label>
+        <div class="nova-strength" data-strength><i></i><i></i><i></i><i></i><span data-strength-label></span></div>
+        <label class="nova-field" data-field>
+          <span>Повторите пароль</span>
+          <input type="password" name="confirm" placeholder="••••••••" autocomplete="new-password">
+          <small data-field-error></small>
+        </label>
+        <label class="nova-switch" data-field>
+          <input type="checkbox" name="agree"><i></i>Принимаю условия демо-сервиса
+          <small data-field-error></small>
+        </label>
+        <p class="nova-form__error" data-form-error hidden></p>
+        <button class="btn btn--full" type="submit">Открыть счёт</button>
+      </form>
+
+      <form class="nova-form" data-auth-form="reset" data-pane="reset" hidden>
+        <h3>Восстановление доступа</h3>
+        <p class="muted">Отправим ссылку для смены пароля на почту, привязанную к счёту.</p>
+        <label class="nova-field" data-field>
+          <span>E-mail</span>
+          <input type="email" name="email" placeholder="you@email.com" autocomplete="email">
+          <small data-field-error></small>
+        </label>
+        <p class="nova-form__success" data-form-success hidden></p>
+        <button class="btn btn--full" type="submit">Отправить ссылку</button>
+        <button class="nova-link" data-auth-switch="login">← Назад ко входу</button>
+      </form>
+
+      <p class="auth-card__note">🔒 Демо: данные хранятся только в этом браузере, пароль — в виде SHA-256 хеша.</p>
+    </div>
+  </div>
+
+  <div class="glass-modal" id="profileModal" aria-hidden="true">
+    <div class="glass-modal__backdrop" data-close-profile></div>
+    <div class="glass-modal__panel profile-card" role="dialog" aria-modal="true" aria-label="Профиль">
+      <button class="glass-modal__close" data-close-profile aria-label="Закрыть">
+        <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+      <div class="profile-card__head">
+        <span class="profile-card__avatar" data-auth-initials></span>
+        <div>
+          <b data-auth-name></b>
+          <small data-auth-email></small>
+        </div>
+      </div>
+      <div class="profile-card__stats">
+        <div><small>Баланс</small><b id="profileBalance">0 ₽</b></div>
+        <div><small>Операций</small><b id="profileTx">0</b></div>
+        <div><small>Клиент с</small><b data-auth-since></b></div>
+      </div>
+
+      <div class="profile-card__tabs" id="profileTabs">
+        <button class="is-active" data-ptab="profile">Профиль</button>
+        <button data-ptab="security">Безопасность</button>
+      </div>
+
+      <form class="nova-form" data-auth-form="profile" data-ppanel="profile">
+        <label class="nova-field" data-field>
+          <span>Имя и фамилия</span>
+          <input type="text" name="name">
+          <small data-field-error></small>
+        </label>
+        <label class="nova-field" data-field>
+          <span>Телефон</span>
+          <input type="tel" name="phone" placeholder="+7 900 000-00-00">
+          <small data-field-error></small>
+        </label>
+        <p class="nova-form__success" data-form-success hidden></p>
+        <button class="btn btn--full" type="submit">Сохранить</button>
+      </form>
+
+      <div data-ppanel="security" hidden>
+        <form class="nova-form" data-auth-form="password">
+          <label class="nova-field" data-field>
+            <span>Текущий пароль</span>
+            <input type="password" name="current" autocomplete="current-password">
+            <small data-field-error></small>
+          </label>
+          <label class="nova-field" data-field>
+            <span>Новый пароль</span>
+            <input type="password" name="password" autocomplete="new-password">
+            <button class="nova-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <small data-field-error></small>
+          </label>
+          <div class="nova-strength" data-strength><i></i><i></i><i></i><i></i><span data-strength-label></span></div>
+          <label class="nova-field" data-field>
+            <span>Повторите новый пароль</span>
+            <input type="password" name="confirm" autocomplete="new-password">
+            <small data-field-error></small>
+          </label>
+          <p class="nova-form__error" data-form-error hidden></p>
+          <p class="nova-form__success" data-form-success hidden></p>
+          <button class="btn btn--full" type="submit">Сменить пароль</button>
+        </form>
+        <div class="sessions">
+          <p class="sessions__title">Активные сеансы</p>
+          <div class="session"><span class="session__dot"></span><div><b id="sessionDevice">Этот браузер</b><small>Сейчас · текущий сеанс</small></div></div>
+        </div>
+      </div>
+
+      <button class="profile-card__logout" data-auth-logout>Выйти из аккаунта</button>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+  <script src="account.js"></script>
+</body>
+</html>

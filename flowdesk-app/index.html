@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlowDesk — задачи, команда и клиенты в одном потоке</title>
+  <meta name="description" content="FlowDesk — онлайн-сервис управления проектами и клиентами. Демо-версия с локальным хранением данных.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="account.css">
+</head>
+<body>
+  <section class="gate" data-when="out" data-auth-root data-view="login">
+    <div class="gate__form">
+      <div class="gate__brand">
+        <span class="brand-mark"><i></i><i></i><i></i></span>
+        <b>FlowDesk</b>
+      </div>
+
+      <div class="gate__inner">
+        <h1 class="gate__title">
+          <span data-pane="login">Войдите в рабочее пространство</span>
+          <span data-pane="register" hidden>Создайте рабочее пространство</span>
+          <span data-pane="reset" hidden>Восстановление доступа</span>
+        </h1>
+        <p class="gate__lead" data-pane="login">Задачи, команда и клиенты — там, где вы их оставили.</p>
+        <p class="gate__lead" data-pane="register" hidden>Бесплатно для команд до 10 человек. Без карты.</p>
+
+        <button class="btn gate__demo" data-auth-demo>
+          <svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg>
+          Открыть демо-пространство
+        </button>
+        <div class="gate__divider"><span>или по e-mail</span></div>
+
+        <form class="g-form" data-auth-form="login" data-pane="login">
+          <label class="field" data-field>
+            <span>E-mail</span>
+            <input type="email" name="email" placeholder="you@company.com" autocomplete="email">
+            <small data-field-error></small>
+          </label>
+          <label class="field" data-field>
+            <span class="g-form__label-row">Пароль <button class="link" data-auth-switch="reset">Забыли?</button></span>
+            <input type="password" name="password" placeholder="••••••••" autocomplete="current-password">
+            <button class="g-eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <small data-field-error></small>
+          </label>
+          <label class="g-check"><input type="checkbox" name="remember" checked>Оставаться в системе 30 дней</label>
+          <p class="form-error" data-form-error hidden></p>
+          <button class="btn btn--primary btn--block" type="submit">Войти</button>
+          <p class="g-form__switch">Нет аккаунта? <button class="link" data-auth-switch="register">Зарегистрироваться</button></p>
+        </form>
+
+        <form class="g-form" data-auth-form="register" data-pane="register" hidden>
+          <label class="field" data-field>
+            <span>Имя и фамилия</span>
+            <input type="text" name="name" placeholder="Алина Морозова" autocomplete="name">
+            <small data-field-error></small>
+          </label>
+          <label class="field" data-field>
+            <span>Рабочий e-mail</span>
+            <input type="email" name="email" placeholder="you@company.com" autocomplete="email">
+            <small data-field-error></small>
+          </label>
+          <label class="field" data-field>
+            <span>Пароль</span>
+            <input type="password" name="password" placeholder="Минимум 8 символов" autocomplete="new-password">
+            <button class="g-eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <small data-field-error></small>
+          </label>
+          <div class="g-strength" data-strength><i></i><i></i><i></i><i></i><span data-strength-label></span></div>
+          <label class="field" data-field>
+            <span>Повторите пароль</span>
+            <input type="password" name="confirm" placeholder="••••••••" autocomplete="new-password">
+            <small data-field-error></small>
+          </label>
+          <label class="g-check" data-field>
+            <input type="checkbox" name="agree">Принимаю условия использования
+            <small data-field-error></small>
+          </label>
+          <p class="form-error" data-form-error hidden></p>
+          <button class="btn btn--primary btn--block" type="submit">Создать пространство</button>
+          <p class="g-form__switch">Уже есть аккаунт? <button class="link" data-auth-switch="login">Войти</button></p>
+        </form>
+
+        <form class="g-form" data-auth-form="reset" data-pane="reset" hidden>
+          <label class="field" data-field>
+            <span>E-mail</span>
+            <input type="email" name="email" placeholder="you@company.com" autocomplete="email">
+            <small data-field-error></small>
+          </label>
+          <p class="g-success" data-form-success hidden></p>
+          <button class="btn btn--primary btn--block" type="submit">Отправить ссылку</button>
+          <p class="g-form__switch"><button class="link" data-auth-switch="login">← Вернуться ко входу</button></p>
+        </form>
+      </div>
+
+      <p class="gate__note">Демо-режим: аккаунты и данные хранятся только в этом браузере.</p>
+    </div>
+
+    <div class="gate__showcase" aria-hidden="true">
+      <div class="showcase">
+        <div class="showcase__stat showcase__stat--a">
+          <small>Выполнено за неделю</small>
+          <b>+38%</b>
+          <svg viewBox="0 0 120 40"><path d="M0 34 C20 30 30 22 45 24 S70 10 85 12 S105 4 120 2"/></svg>
+        </div>
+        <div class="showcase__board">
+          <div class="showcase__col">
+            <span class="showcase__head"><i style="--c:#9198a6"></i>Бэклог</span>
+            <div class="showcase__card"><b>Аудит лендинга</b><span class="tag tag--low">Низкий</span></div>
+            <div class="showcase__card"><b>Интервью с клиентом</b><span class="tag tag--medium">Средний</span></div>
+          </div>
+          <div class="showcase__col">
+            <span class="showcase__head"><i style="--c:#5b5bf7"></i>В работе</span>
+            <div class="showcase__card showcase__card--moving"><b>Дизайн онбординга</b><span class="tag tag--high">Высокий</span></div>
+            <div class="showcase__card"><b>API каталога</b><span class="tag tag--medium">Средний</span></div>
+          </div>
+          <div class="showcase__col">
+            <span class="showcase__head"><i style="--c:#16a36a"></i>Готово</span>
+            <div class="showcase__card"><b>Релиз 2.3</b><span class="tag tag--low">Низкий</span></div>
+          </div>
+        </div>
+        <div class="showcase__stat showcase__stat--b">
+          <span class="showcase__avatars"><i style="--c:#5b5bf7">АМ</i><i style="--c:#16a36a">ДК</i><i style="--c:#e0618f">ЕС</i></span>
+          <small>Команда онлайн</small>
+        </div>
+      </div>
+      <p class="gate__quote">«С FlowDesk мы перестали терять задачи между чатами и почтой».<span>— North Studio</span></p>
+    </div>
+  </section>
+
+  <div class="app" data-when="in">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__brand">
+        <span class="brand-mark"><i></i><i></i><i></i></span>
+        <b>FlowDesk</b>
+      </div>
+
+      <button class="workspace">
+        <span class="workspace__avatar">NS</span>
+        <span class="workspace__info"><b>North Studio</b><small>Команда · 6 человек</small></span>
+      </button>
+
+      <nav class="menu" id="menu">
+        <button class="menu__item is-active" data-view="dashboard">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>
+          Обзор
+        </button>
+        <button class="menu__item" data-view="board">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="11" rx="1.5"/><rect x="17" y="4" width="4" height="7" rx="1.5"/></svg>
+          Задачи
+          <span class="menu__badge" id="openBadge">0</span>
+        </button>
+        <button class="menu__item" data-view="clients">
+          <svg viewBox="0 0 24 24"><path d="M16 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1"/><circle cx="9.5" cy="8" r="3.5"/><path d="M21 20v-1a4 4 0 0 0-3-3.8M16 4.3a3.5 3.5 0 0 1 0 6.9"/></svg>
+          Клиенты
+        </button>
+        <button class="menu__item" data-view="team">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          Команда
+        </button>
+      </nav>
+
+      <div class="sidebar__footer">
+        <button class="me" id="meBtn">
+          <span class="avatar me__avatar" data-auth-initials></span>
+          <span class="me__info"><b data-auth-name></b><small data-auth-email></small></span>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+        </button>
+        <div class="demo-note">
+          <b>Демо-режим</b>
+          <span>Данные хранятся только в вашем браузере.</span>
+          <button id="resetData">Сбросить данные</button>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">
+          <span class="theme-toggle__track"><span class="theme-toggle__thumb"></span></span>
+          <span id="themeLabel">Тёмная тема</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn mobile-only" id="openSidebar" aria-label="Меню">
+          <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <div class="topbar__title">
+          <small id="viewEyebrow">North Studio</small>
+          <h1 id="viewTitle">Обзор</h1>
+        </div>
+        <button class="search-trigger" id="openPalette">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <span>Поиск и команды</span>
+          <kbd>Ctrl K</kbd>
+        </button>
+        <div class="notifications">
+          <button class="icon-btn" id="bellBtn" aria-label="Уведомления">
+            <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4"/></svg>
+            <span class="dot" id="bellDot"></span>
+          </button>
+          <div class="dropdown" id="notifications"></div>
+        </div>
+        <button class="btn btn--primary" id="newTaskBtn">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          <span>Задача</span>
+        </button>
+      </header>
+
+      <section class="view is-active" data-view="dashboard">
+        <div class="greeting">
+          <h2 id="greeting">Добрый день, Алина</h2>
+          <p id="greetingSub"></p>
+        </div>
+
+        <div class="kpis" id="kpis"></div>
+
+        <div class="dash-grid">
+          <article class="panel panel--chart">
+            <div class="panel__head">
+              <h3>Выполненные задачи</h3>
+              <div class="segmented" id="chartRange">
+                <button class="is-active" data-range="14">14 дней</button>
+                <button data-range="30">30 дней</button>
+              </div>
+            </div>
+            <div class="chart" id="chart"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel__head">
+              <h3>Мои задачи</h3>
+              <button class="link" data-goto="board">Все →</button>
+            </div>
+            <ul class="todo" id="myTasks"></ul>
+          </article>
+
+          <article class="panel">
+            <div class="panel__head"><h3>Статусы</h3></div>
+            <div class="status-bars" id="statusBars"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel__head"><h3>Активность</h3></div>
+            <ul class="feed" id="feed"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" data-view="board">
+        <div class="board-toolbar">
+          <div class="avatar-filter" id="assigneeFilter"></div>
+          <div class="segmented" id="priorityFilter">
+            <button class="is-active" data-priority="all">Все</button>
+            <button data-priority="high">Высокий</button>
+            <button data-priority="medium">Средний</button>
+            <button data-priority="low">Низкий</button>
+          </div>
+        </div>
+        <div class="board" id="board"></div>
+      </section>
+
+      <section class="view" data-view="clients">
+        <div class="clients-toolbar">
+          <label class="input-search">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <input type="search" id="clientSearch" placeholder="Поиск по компании или контакту">
+          </label>
+          <div class="segmented" id="clientStatusFilter">
+            <button class="is-active" data-status="all">Все</button>
+            <button data-status="active">Активные</button>
+            <button data-status="lead">Лиды</button>
+            <button data-status="paused">Пауза</button>
+          </div>
+          <button class="btn" id="newClientBtn">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            Клиент
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th><button data-sort="company">Компания</button></th>
+                <th><button data-sort="contact">Контакт</button></th>
+                <th><button data-sort="status">Статус</button></th>
+                <th><button data-sort="value">Сумма сделок</button></th>
+                <th><button data-sort="tasks">Задачи</button></th>
+                <th><button data-sort="updated">Обновлено</button></th>
+              </tr>
+            </thead>
+            <tbody id="clientsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="view" data-view="team">
+        <div class="team" id="team"></div>
+      </section>
+    </div>
+  </div>
+
+  <aside class="drawer" id="clientDrawer" aria-hidden="true">
+    <div class="drawer__head">
+      <h3 id="drawerTitle"></h3>
+      <button class="icon-btn" data-close-drawer aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="drawer__body" id="drawerBody"></div>
+  </aside>
+
+  <div class="modal" id="taskModal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-modal></div>
+    <form class="modal__panel" id="taskForm" novalidate>
+      <div class="modal__head">
+        <h3 id="taskModalTitle">Новая задача</h3>
+        <button type="button" class="icon-btn" data-close-modal aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      </div>
+      <label class="field field--title">
+        <input name="title" placeholder="Название задачи" required minlength="3" autocomplete="off">
+      </label>
+      <label class="field">
+        <span>Описание</span>
+        <textarea name="description" rows="3" placeholder="Детали, ссылки, критерии готовности"></textarea>
+      </label>
+      <div class="field-grid">
+        <label class="field">
+          <span>Статус</span>
+          <select name="status" id="taskStatus"></select>
+        </label>
+        <label class="field">
+          <span>Приоритет</span>
+          <select name="priority">
+            <option value="high">Высокий</option>
+            <option value="medium">Средний</option>
+            <option value="low">Низкий</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Исполнитель</span>
+          <select name="assignee" id="taskAssignee"></select>
+        </label>
+        <label class="field">
+          <span>Клиент</span>
+          <select name="client" id="taskClient"></select>
+        </label>
+        <label class="field">
+          <span>Срок</span>
+          <input type="date" name="due">
+        </label>
+        <label class="field">
+          <span>Оценка, ч</span>
+          <input type="number" name="estimate" min="1" max="200" value="4">
+        </label>
+      </div>
+      <p class="form-error" id="taskError"></p>
+      <div class="modal__foot">
+        <button type="button" class="btn btn--danger" id="deleteTask">Удалить</button>
+        <button type="submit" class="btn btn--primary">Сохранить</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal" id="clientModal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-modal></div>
+    <form class="modal__panel" id="clientForm" novalidate>
+      <div class="modal__head">
+        <h3>Новый клиент</h3>
+        <button type="button" class="icon-btn" data-close-modal aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      </div>
+      <div class="field-grid">
+        <label class="field">
+          <span>Компания</span>
+          <input name="company" required minlength="2">
+        </label>
+        <label class="field">
+          <span>Контактное лицо</span>
+          <input name="contact" required minlength="2">
+        </label>
+        <label class="field">
+          <span>E-mail</span>
+          <input name="email" type="email" required>
+        </label>
+        <label class="field">
+          <span>Статус</span>
+          <select name="status">
+            <option value="lead">Лид</option>
+            <option value="active">Активный</option>
+            <option value="paused">Пауза</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Сумма сделок, ₽</span>
+          <input name="value" type="number" min="0" step="10000" value="300000">
+        </label>
+        <label class="field">
+          <span>Отрасль</span>
+          <input name="industry" placeholder="Например, ритейл">
+        </label>
+      </div>
+      <p class="form-error" id="clientError"></p>
+      <div class="modal__foot">
+        <span></span>
+        <button type="submit" class="btn btn--primary">Добавить клиента</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="palette" id="palette" aria-hidden="true">
+    <div class="palette__backdrop" data-close-palette></div>
+    <div class="palette__panel" role="dialog" aria-modal="true">
+      <label class="palette__input">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input type="text" id="paletteInput" placeholder="Найдите задачу, клиента или действие…" autocomplete="off">
+        <kbd>Esc</kbd>
+      </label>
+      <ul class="palette__list" id="paletteList"></ul>
+      <div class="palette__hint"><span><kbd>↑</kbd><kbd>↓</kbd> навигация</span><span><kbd>Enter</kbd> выбрать</span></div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts"></div>
+
+  <div class="modal" id="profileModal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-profile></div>
+    <div class="modal__panel profile">
+      <div class="modal__head">
+        <h3>Настройки аккаунта</h3>
+        <button type="button" class="icon-btn" data-close-profile aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      </div>
+      <div class="profile__hero">
+        <span class="avatar avatar--lg" data-auth-initials></span>
+        <div>
+          <b data-auth-name></b>
+          <small><span data-auth-email></span> · с <span data-auth-since></span></small>
+        </div>
+      </div>
+      <div class="segmented profile__tabs" id="profileTabs">
+        <button class="is-active" data-ptab="profile">Профиль</button>
+        <button data-ptab="security">Безопасность</button>
+      </div>
+
+      <form class="g-form" data-auth-form="profile" data-ppanel="profile">
+        <div class="field-grid">
+          <label class="field" data-field>
+            <span>Имя и фамилия</span>
+            <input type="text" name="name">
+            <small data-field-error></small>
+          </label>
+          <label class="field" data-field>
+            <span>Телефон</span>
+            <input type="tel" name="phone" placeholder="+7 900 000-00-00">
+            <small data-field-error></small>
+          </label>
+        </div>
+        <label class="field" data-field>
+          <span>E-mail</span>
+          <input type="email" name="email" readonly>
+        </label>
+        <p class="g-success" data-form-success hidden></p>
+        <div class="modal__foot">
+          <button type="button" class="btn btn--danger" data-auth-logout>Выйти</button>
+          <button type="submit" class="btn btn--primary">Сохранить</button>
+        </div>
+      </form>
+
+      <form class="g-form" data-auth-form="password" data-ppanel="security" hidden>
+        <label class="field" data-field>
+          <span>Текущий пароль</span>
+          <input type="password" name="current" autocomplete="current-password">
+          <small data-field-error></small>
+        </label>
+        <div class="field-grid">
+          <label class="field" data-field>
+            <span>Новый пароль</span>
+            <input type="password" name="password" autocomplete="new-password">
+            <button class="g-eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <small data-field-error></small>
+          </label>
+          <label class="field" data-field>
+            <span>Повторите пароль</span>
+            <input type="password" name="confirm" autocomplete="new-password">
+            <small data-field-error></small>
+          </label>
+        </div>
+        <div class="g-strength" data-strength><i></i><i></i><i></i><i></i><span data-strength-label></span></div>
+        <p class="form-error" data-form-error hidden></p>
+        <p class="g-success" data-form-success hidden></p>
+        <div class="modal__foot">
+          <span class="profile__session" id="sessionInfo"></span>
+          <button type="submit" class="btn btn--primary">Обновить пароль</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+  <script src="account.js"></script>
+</body>
+</html>

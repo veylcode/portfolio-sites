@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vitalis — клиника, в которой вас слышат</title>
+  <meta name="description" content="Vitalis — многопрофильная клиника. Врачи, услуги, цены и онлайн-запись на приём.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="account.css">
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#top" class="logo">
+        <span class="logo__mark"><i></i><i></i></span>
+        Vitalis
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#services">Услуги</a>
+        <a href="#doctors">Врачи</a>
+        <a href="#checkups">Check-up</a>
+        <a href="#prices">Цены</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+      <div class="header__right">
+        <a href="tel:+74950000000" class="header__phone">+7 495 000-00-00</a>
+        <button class="patient-btn" id="patientBtn" aria-label="Кабинет пациента">
+          <svg viewBox="0 0 24 24" data-when="out"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          <span data-when="out">Войти</span>
+          <span class="patient-btn__avatar" data-when="in" data-auth-initials></span>
+          <span data-when="in" data-auth-first-name></span>
+        </button>
+        <a href="#booking" class="btn btn--small">Записаться</a>
+        <button class="burger" id="burger" aria-label="Меню"><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="container hero__grid">
+        <div class="hero__text">
+          <span class="chip"><span class="chip__pulse"></span>Принимаем сегодня до 21:00</span>
+          <h1 class="hero__title">Медицина, в которой <span class="highlight">вас слышат</span></h1>
+          <p class="hero__lead">42 врача, собственная лаборатория и диагностика экспертного класса. Приём без очередей — в удобное для вас время.</p>
+
+          <div class="search" id="search">
+            <svg viewBox="0 0 24 24" class="search__icon"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <input type="search" id="searchInput" placeholder="Врач, услуга или симптом" autocomplete="off">
+            <div class="search__results" id="searchResults"></div>
+          </div>
+          <div class="hero__tags">
+            <span>Часто ищут:</span>
+            <button data-query="кардиолог">кардиолог</button>
+            <button data-query="УЗИ">УЗИ</button>
+            <button data-query="анализы">анализы</button>
+            <button data-query="педиатр">педиатр</button>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <div class="pulse-card">
+            <div class="pulse-card__head">
+              <span>Пульс клиники</span>
+              <b><span id="bpm">72</span> уд/мин</b>
+            </div>
+            <svg class="ecg" viewBox="0 0 400 120" preserveAspectRatio="none">
+              <path id="ecgPath" d="M0 60 H90 L100 60 L110 40 L120 60 L135 60 L145 10 L158 105 L170 60 L185 60 L200 48 L215 60 H290 L300 60 L310 40 L320 60 L335 60 L345 10 L358 105 L370 60 L385 60 L400 52"/>
+            </svg>
+          </div>
+
+          <div class="float float--next">
+            <span class="float__icon">
+              <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>
+            </span>
+            <div><small>Ближайший приём</small><b>Сегодня, 14:30</b><small>Терапевт · Морозова А.</small></div>
+          </div>
+
+          <div class="float float--rating">
+            <b>4,9</b>
+            <div><span class="stars">★★★★★</span><small>3 280 отзывов пациентов</small></div>
+          </div>
+
+          <div class="float float--lab">
+            <span class="float__icon float__icon--coral">
+              <svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/></svg>
+            </span>
+            <div><small>Результаты анализов</small><b>от 4 часов</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust">
+      <div class="container trust__grid">
+        <div class="trust__item reveal"><b data-count="18">0</b><span>лет заботы о пациентах</span></div>
+        <div class="trust__item reveal"><b data-count="42">0</b><span>врача высшей категории</span></div>
+        <div class="trust__item reveal"><b data-count="120">0</b><span>тысяч приёмов в год</span></div>
+        <div class="trust__item reveal"><b data-count="98" data-suffix="%">0</b><span>пациентов рекомендуют</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow reveal">Направления</p>
+          <h2 class="section__title reveal">Всё для здоровья — <br>в одном месте</h2>
+        </div>
+        <div class="services" id="servicesGrid"></div>
+      </div>
+    </section>
+
+    <section class="section section--tint" id="checkups">
+      <div class="container">
+        <div class="section__head section__head--row">
+          <div>
+            <p class="eyebrow reveal">Программы</p>
+            <h2 class="section__title reveal">Check-up за один визит</h2>
+          </div>
+          <p class="section__note reveal">Полное обследование за 3–4 часа. Итоговое заключение — у терапевта в тот же день.</p>
+        </div>
+        <div class="checkups">
+          <article class="checkup reveal">
+            <span class="checkup__tag">Базовый</span>
+            <h3>Здоровье 30+</h3>
+            <p class="checkup__price">12 900 ₽</p>
+            <ul>
+              <li>Консультация терапевта</li>
+              <li>Общий и биохимический анализ крови</li>
+              <li>ЭКГ с расшифровкой</li>
+              <li>УЗИ брюшной полости</li>
+            </ul>
+            <a href="#booking" class="btn btn--ghost" data-book-service="therapy">Записаться</a>
+          </article>
+          <article class="checkup checkup--accent reveal">
+            <span class="checkup__tag">Популярный</span>
+            <h3>Сердце и сосуды</h3>
+            <p class="checkup__price">18 400 ₽</p>
+            <ul>
+              <li>Консультация кардиолога</li>
+              <li>Эхокардиография</li>
+              <li>Холтеровское мониторирование</li>
+              <li>Липидный профиль и коагулограмма</li>
+              <li>Дуплекс сосудов шеи</li>
+            </ul>
+            <a href="#booking" class="btn" data-book-service="cardio">Записаться</a>
+          </article>
+          <article class="checkup reveal">
+            <span class="checkup__tag">Расширенный</span>
+            <h3>Полный контроль</h3>
+            <p class="checkup__price">34 600 ₽</p>
+            <ul>
+              <li>Приём 5 специалистов</li>
+              <li>МРТ головного мозга</li>
+              <li>Онкомаркеры и гормоны</li>
+              <li>Гастроскопия во сне</li>
+            </ul>
+            <a href="#booking" class="btn btn--ghost" data-book-service="therapy">Записаться</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="doctors">
+      <div class="container">
+        <div class="section__head section__head--row">
+          <div>
+            <p class="eyebrow reveal">Команда</p>
+            <h2 class="section__title reveal">Наши врачи</h2>
+          </div>
+          <label class="doctor-search reveal">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <input type="search" id="doctorSearch" placeholder="Поиск по имени">
+          </label>
+        </div>
+        <div class="filter-chips reveal" id="doctorFilters"></div>
+        <div class="doctors" id="doctorsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section section--dark" id="booking">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow reveal">Онлайн-запись</p>
+          <h2 class="section__title reveal">Запишитесь за минуту</h2>
+        </div>
+
+        <div class="wizard reveal" id="wizard">
+          <ol class="wizard__steps" id="wizardSteps">
+            <li class="is-active"><span>1</span>Направление</li>
+            <li><span>2</span>Врач</li>
+            <li><span>3</span>Дата и время</li>
+            <li><span>4</span>Данные</li>
+          </ol>
+          <div class="wizard__progress"><span id="wizardProgress"></span></div>
+
+          <div class="wizard__body">
+            <div class="wizard__panel is-active" data-step="1">
+              <h3>Какой специалист вам нужен?</h3>
+              <div class="option-grid" id="specialtyOptions"></div>
+            </div>
+
+            <div class="wizard__panel" data-step="2">
+              <h3>Выберите врача</h3>
+              <div class="option-list" id="doctorOptions"></div>
+            </div>
+
+            <div class="wizard__panel" data-step="3">
+              <h3>Когда вам удобно?</h3>
+              <div class="schedule">
+                <div class="calendar">
+                  <div class="calendar__head">
+                    <button type="button" id="prevMonth" aria-label="Предыдущий месяц">‹</button>
+                    <b id="monthLabel"></b>
+                    <button type="button" id="nextMonth" aria-label="Следующий месяц">›</button>
+                  </div>
+                  <div class="calendar__week"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
+                  <div class="calendar__days" id="calendarDays"></div>
+                </div>
+                <div class="times">
+                  <p class="times__label" id="timesLabel">Выберите день в календаре</p>
+                  <div class="times__grid" id="timesGrid"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard__panel" data-step="4">
+              <h3>Данные пациента</h3>
+              <form class="patient" id="patientForm" novalidate>
+                <label class="field">
+                  <span>ФИО</span>
+                  <input name="name" required minlength="3" autocomplete="name">
+                </label>
+                <label class="field">
+                  <span>Телефон</span>
+                  <input name="phone" type="tel" required pattern="[\d\s\+\-\(\)]{10,}" autocomplete="tel">
+                </label>
+                <label class="field">
+                  <span>Дата рождения</span>
+                  <input name="birth" type="date" required>
+                </label>
+                <label class="field">
+                  <span>Комментарий для врача</span>
+                  <input name="comment" placeholder="Жалобы, вопросы">
+                </label>
+                <label class="check">
+                  <input type="checkbox" name="consent" required>
+                  <span>Согласен на обработку персональных данных</span>
+                </label>
+              </form>
+              <div class="recap" id="recap"></div>
+            </div>
+
+            <div class="wizard__panel" data-step="5">
+              <div class="done">
+                <div class="done__icon">
+                  <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="m15 27 7 7 15-15"/></svg>
+                </div>
+                <h3>Вы записаны!</h3>
+                <p id="doneText"></p>
+                <p class="done__note">Это демонстрационная запись — данные хранятся только в вашем браузере.</p>
+                <button type="button" class="btn" id="wizardRestart">Записаться ещё</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="wizard__nav" id="wizardNav">
+            <button type="button" class="btn btn--ghost-light" id="wizardBack">Назад</button>
+            <p class="wizard__error" id="wizardError"></p>
+            <button type="button" class="btn btn--light" id="wizardNext">Далее</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="prices">
+      <div class="container prices">
+        <div class="prices__intro">
+          <p class="eyebrow reveal">Прайс-лист</p>
+          <h2 class="section__title reveal">Прозрачные цены</h2>
+          <p class="muted reveal">Стоимость фиксируется при записи и не меняется после приёма. Принимаем полисы ДМС ведущих страховых.</p>
+        </div>
+        <div class="price-list" id="priceList"></div>
+      </div>
+    </section>
+
+    <section class="section section--tint">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow reveal">Отзывы</p>
+          <h2 class="section__title reveal">Что говорят пациенты</h2>
+        </div>
+        <div class="reviews reveal">
+          <div class="reviews__track" id="reviewsTrack">
+            <blockquote class="review">
+              <p>«Впервые врач объяснил мне диагноз так, что я поняла каждое слово. Никакой спешки и формальности».</p>
+              <footer><b>Елена К.</b><span>кардиология</span></footer>
+            </blockquote>
+            <blockquote class="review">
+              <p>«Записался в приложении в 9 утра, в 11 уже был на приёме. Анализы пришли на почту вечером того же дня».</p>
+              <footer><b>Михаил Р.</b><span>терапия</span></footer>
+            </blockquote>
+            <blockquote class="review">
+              <p>«Ребёнок не плакал ни разу — детский кабинет больше похож на игровую. Педиатр — просто волшебница».</p>
+              <footer><b>Анастасия Л.</b><span>педиатрия</span></footer>
+            </blockquote>
+            <blockquote class="review">
+              <p>«Прошла check-up за одно утро. Всё чётко организовано, а заключение выдали сразу с рекомендациями».</p>
+              <footer><b>Ольга Т.</b><span>check-up</span></footer>
+            </blockquote>
+          </div>
+          <div class="reviews__dots" id="reviewsDots"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contacts">
+    <div class="container footer__grid">
+      <div>
+        <a href="#top" class="logo logo--light"><span class="logo__mark"><i></i><i></i></span>Vitalis</a>
+        <p class="footer__text">Многопрофильная клиника. Концепт для портфолио, медицинские услуги не оказываются.</p>
+      </div>
+      <div>
+        <h4>Адрес</h4>
+        <p>Москва, Ленинский проспект, 45<br>м. Академическая, 5 минут пешком</p>
+      </div>
+      <div>
+        <h4>Режим работы</h4>
+        <p>Пн–Пт: 08:00 — 21:00<br>Сб–Вс: 09:00 — 18:00</p>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <p><a href="tel:+74950000000">+7 495 000-00-00</a><br><a href="mailto:care@vitalis.clinic">care@vitalis.clinic</a></p>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <span>© 2026 Vitalis</span>
+      <span>Имеются противопоказания. Необходима консультация специалиста.</span>
+    </div>
+  </footer>
+
+  <div class="v-modal" id="authModal" aria-hidden="true">
+    <div class="v-modal__backdrop" data-close-auth></div>
+    <div class="v-modal__panel auth-split" role="dialog" aria-modal="true" aria-label="Вход в кабинет пациента">
+      <aside class="auth-split__side">
+        <span class="logo logo--light"><span class="logo__mark"><i></i><i></i></span>Vitalis</span>
+        <h3>Кабинет пациента</h3>
+        <ul class="auth-split__list">
+          <li>Онлайн-запись к врачам за минуту</li>
+          <li>История приёмов и напоминания</li>
+          <li>Медкарта всегда под рукой</li>
+        </ul>
+        <svg class="auth-split__ecg" viewBox="0 0 400 80" preserveAspectRatio="none"><path d="M0 40 H120 L132 40 L142 20 L152 40 L166 40 L176 4 L190 76 L202 40 L216 40 L228 30 L240 40 H400"/></svg>
+      </aside>
+
+      <div class="auth-split__main" data-auth-root data-view="login">
+        <button class="v-modal__close" data-close-auth aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+        <div class="seg-tabs">
+          <button data-auth-switch="login">Вход</button>
+          <button data-auth-switch="register">Регистрация</button>
+        </div>
+
+        <form class="vt-form" data-auth-form="login" data-pane="login">
+          <h3>Рады видеть вас</h3>
+          <label class="vt-field" data-field>
+            <span>E-mail</span>
+            <input type="email" name="email" placeholder="name@mail.ru" autocomplete="email">
+            <small data-field-error></small>
+          </label>
+          <label class="vt-field" data-field>
+            <span>Пароль</span>
+            <input type="password" name="password" placeholder="Ваш пароль" autocomplete="current-password">
+            <button class="vt-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <small data-field-error></small>
+          </label>
+          <div class="vt-form__row">
+            <label class="check"><input type="checkbox" name="remember" checked><span>Запомнить меня</span></label>
+            <button class="vt-link" data-auth-switch="reset">Забыли пароль?</button>
+          </div>
+          <p class="vt-form__error" data-form-error hidden></p>
+          <button class="btn btn--full" type="submit">Войти</button>
+          <button class="btn btn--ghost btn--full" data-auth-demo>Войти как демо-пациент</button>
+        </form>
+
+        <form class="vt-form" data-auth-form="register" data-pane="register" hidden>
+          <h3>Новый пациент</h3>
+          <label class="vt-field" data-field>
+            <span>ФИО</span>
+            <input type="text" name="name" placeholder="Иванова Анна Сергеевна" autocomplete="name">
+            <small data-field-error></small>
+          </label>
+          <label class="vt-field" data-field>
+            <span>E-mail</span>
+            <input type="email" name="email" placeholder="name@mail.ru" autocomplete="email">
+            <small data-field-error></small>
+          </label>
+          <label class="vt-field" data-field>
+            <span>Пароль</span>
+            <input type="password" name="password" placeholder="Не менее 8 символов" autocomplete="new-password">
+            <button class="vt-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <small data-field-error></small>
+          </label>
+          <div class="vt-strength" data-strength><i></i><i></i><i></i><i></i><span data-strength-label></span></div>
+          <label class="vt-field" data-field>
+            <span>Повторите пароль</span>
+            <input type="password" name="confirm" placeholder="Ещё раз" autocomplete="new-password">
+            <small data-field-error></small>
+          </label>
+          <label class="check vt-check" data-field>
+            <input type="checkbox" name="agree"><span>Согласен на обработку персональных данных</span>
+            <small data-field-error></small>
+          </label>
+          <p class="vt-form__error" data-form-error hidden></p>
+          <button class="btn btn--full" type="submit">Создать кабинет</button>
+        </form>
+
+        <form class="vt-form" data-auth-form="reset" data-pane="reset" hidden>
+          <h3>Восстановление пароля</h3>
+          <p class="muted">Введите e-mail, указанный при регистрации.</p>
+          <label class="vt-field" data-field>
+            <span>E-mail</span>
+            <input type="email" name="email" placeholder="name@mail.ru" autocomplete="email">
+            <small data-field-error></small>
+          </label>
+          <p class="vt-form__success" data-form-success hidden></p>
+          <button class="btn btn--full" type="submit">Отправить ссылку</button>
+          <button class="vt-link" data-auth-switch="login">← Вернуться ко входу</button>
+        </form>
+
+        <p class="auth-split__note">Демо-режим: данные хранятся только в вашем браузере и никуда не передаются.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="v-modal" id="cabinetModal" aria-hidden="true">
+    <div class="v-modal__backdrop" data-close-cabinet></div>
+    <div class="v-modal__panel cabinet" role="dialog" aria-modal="true" aria-label="Кабинет пациента">
+      <button class="v-modal__close" data-close-cabinet aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      <header class="cabinet__head">
+        <span class="cabinet__avatar" data-auth-initials></span>
+        <div>
+          <small>Кабинет пациента</small>
+          <h3 data-auth-name></h3>
+          <span class="cabinet__card">Медкарта № <b id="cardNumber"></b></span>
+        </div>
+      </header>
+
+      <div class="cabinet__summary">
+        <div><b id="sumUpcoming">0</b><span>предстоящих приёмов</span></div>
+        <div><b id="sumPast">0</b><span>визитов всего</span></div>
+        <div><b id="sumSpent">0 ₽</b><span>оплачено</span></div>
+      </div>
+
+      <div class="seg-tabs seg-tabs--wide" id="cabinetTabs">
+        <button class="is-active" data-ctab="visits">Приёмы</button>
+        <button data-ctab="card">Медкарта</button>
+        <button data-ctab="security">Безопасность</button>
+      </div>
+
+      <div data-cpanel="visits">
+        <ul class="visits" id="visitsList"></ul>
+      </div>
+
+      <div data-cpanel="card" hidden>
+        <form class="vt-form vt-form--grid" data-auth-form="profile">
+          <label class="vt-field" data-field>
+            <span>ФИО</span>
+            <input type="text" name="name">
+            <small data-field-error></small>
+          </label>
+          <label class="vt-field" data-field>
+            <span>Телефон</span>
+            <input type="tel" name="phone" placeholder="+7 900 000-00-00">
+            <small data-field-error></small>
+          </label>
+          <label class="vt-field" data-field>
+            <span>E-mail</span>
+            <input type="email" name="email" readonly>
+          </label>
+          <label class="vt-field">
+            <span>Дата рождения</span>
+            <input type="date" id="birthInput">
+          </label>
+          <label class="vt-field vt-field--wide">
+            <span>Аллергии и особенности</span>
+            <input type="text" id="allergyInput" placeholder="Например: пенициллин">
+          </label>
+          <p class="vt-form__success" data-form-success hidden></p>
+          <button class="btn" type="submit">Сохранить медкарту</button>
+        </form>
+      </div>
+
+      <div data-cpanel="security" hidden>
+        <form class="vt-form" data-auth-form="password">
+          <label class="vt-field" data-field>
+            <span>Текущий пароль</span>
+            <input type="password" name="current" autocomplete="current-password">
+            <small data-field-error></small>
+          </label>
+          <label class="vt-field" data-field>
+            <span>Новый пароль</span>
+            <input type="password" name="password" autocomplete="new-password">
+            <button class="vt-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <small data-field-error></small>
+          </label>
+          <div class="vt-strength" data-strength><i></i><i></i><i></i><i></i><span data-strength-label></span></div>
+          <label class="vt-field" data-field>
+            <span>Повторите новый пароль</span>
+            <input type="password" name="confirm" autocomplete="new-password">
+            <small data-field-error></small>
+          </label>
+          <p class="vt-form__error" data-form-error hidden></p>
+          <p class="vt-form__success" data-form-success hidden></p>
+          <button class="btn" type="submit">Сменить пароль</button>
+        </form>
+        <button class="cabinet__logout" data-auth-logout>Выйти из кабинета</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="v-toast" id="vToast" role="status"></div>
+
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+  <script src="account.js"></script>
+</body>
+</html>

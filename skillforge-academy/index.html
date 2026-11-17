@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillForge — куй навыки, пока горячо</title>
+  <meta name="description" content="SkillForge — онлайн-платформа обучения: курсы по программированию, дизайну, аналитике и маркетингу.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="account.css">
+</head>
+<body>
+  <header class="header" id="header">
+    <a href="#top" class="logo"><span class="logo__mark">SF</span>SkillForge</a>
+    <nav class="nav" id="nav">
+      <a href="#catalog">Курсы</a>
+      <a href="#cabinet">Кабинет</a>
+      <a href="#activity">Прогресс</a>
+      <a href="#pricing">Тарифы</a>
+    </nav>
+    <div class="header__right">
+      <span class="streak" title="Дней подряд"><span class="streak__fire">🔥</span><b id="streakCount">0</b></span>
+      <button class="btn btn--small" data-when="out" id="loginBtn">Войти</button>
+      <button class="student-btn" data-when="in" id="studentBtn" aria-label="Профиль студента">
+        <span data-auth-initials></span>
+      </button>
+      <button class="burger" id="burger" aria-label="Меню"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="hero__text">
+        <span class="badge">Новый поток — 1 декабря</span>
+        <h1 class="hero__title">
+          Куй навыки,<br>пока горячо:
+          <span class="typed"><span id="typed">код</span><i class="typed__caret"></i></span>
+        </h1>
+        <p class="hero__lead">Практические курсы от действующих специалистов. Короткие уроки, реальные проекты и ревью от наставника — учитесь в своём темпе.</p>
+        <div class="hero__actions">
+          <a href="#catalog" class="btn">Выбрать курс</a>
+          <a href="#cabinet" class="btn btn--ghost">Пробный урок</a>
+        </div>
+        <ul class="hero__stats">
+          <li><b>48 000+</b>студентов</li>
+          <li><b>120</b>курсов</li>
+          <li><b>4,9 ★</b>средняя оценка</li>
+        </ul>
+      </div>
+
+      <div class="hero__visual">
+        <div class="window">
+          <div class="window__bar"><i></i><i></i><i></i><span>lesson-1.js</span></div>
+          <pre class="window__code"><code id="heroCode"></code></pre>
+        </div>
+        <div class="sticker-card sticker-card--yellow">
+          <b>+120 XP</b>
+          <span>Урок пройден</span>
+        </div>
+        <div class="sticker-card sticker-card--blue">
+          <span class="ring" style="--p: 72"><b>72%</b></span>
+          <span>Курс «JavaScript с нуля»</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Frontend</span><span>★</span><span>UI/UX-дизайн</span><span>★</span><span>Data Science</span><span>★</span><span>Python</span><span>★</span><span>Маркетинг</span><span>★</span><span>Продакт-менеджмент</span><span>★</span>
+        <span>Frontend</span><span>★</span><span>UI/UX-дизайн</span><span>★</span><span>Data Science</span><span>★</span><span>Python</span><span>★</span><span>Маркетинг</span><span>★</span><span>Продакт-менеджмент</span><span>★</span>
+      </div>
+    </div>
+
+    <section class="section" id="catalog">
+      <div class="section__head">
+        <h2 class="title reveal">Каталог курсов</h2>
+        <p class="reveal">Найдите курс по направлению, уровню или ключевому слову.</p>
+      </div>
+
+      <div class="toolbar reveal">
+        <label class="search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input type="search" id="courseSearch" placeholder="Например, React или Figma">
+        </label>
+        <div class="tabs" id="categoryTabs"></div>
+        <select class="select" id="levelSelect" aria-label="Уровень">
+          <option value="all">Любой уровень</option>
+          <option value="Новичок">Новичок</option>
+          <option value="Средний">Средний</option>
+          <option value="Продвинутый">Продвинутый</option>
+        </select>
+      </div>
+
+      <div class="courses" id="coursesGrid"></div>
+      <p class="courses__empty" id="coursesEmpty" hidden>Ничего не нашлось. Попробуйте изменить запрос.</p>
+    </section>
+
+    <section class="section section--dark" id="cabinet">
+      <div class="section__head">
+        <h2 class="title reveal">Учебный кабинет</h2>
+        <p class="reveal">Проходите уроки, отмечайте прогресс и проверяйте себя тестами. Прогресс сохраняется в браузере.</p>
+      </div>
+
+      <div class="player reveal">
+        <aside class="player__side">
+          <label class="player__select">
+            <span>Мой курс</span>
+            <select id="enrolledSelect"></select>
+          </label>
+          <div class="player__progress">
+            <span class="ring ring--big" id="courseRing" style="--p: 0"><b id="courseRingValue">0%</b></span>
+            <div>
+              <b id="courseLessonsDone">0 из 0</b>
+              <small>уроков пройдено</small>
+            </div>
+          </div>
+          <ol class="lessons" id="lessonsList"></ol>
+        </aside>
+
+        <article class="player__main" id="lessonView"></article>
+      </div>
+    </section>
+
+    <section class="section" id="activity">
+      <div class="activity">
+        <div class="activity__intro">
+          <h2 class="title reveal">Ваш ритм</h2>
+          <p class="reveal">Каждая клетка — день. Чем ярче, тем больше уроков вы прошли. Пройдите урок сегодня, чтобы продлить серию.</p>
+          <dl class="activity__stats reveal">
+            <div><dt id="statLessons">0</dt><dd>уроков всего</dd></div>
+            <div><dt id="statXp">0</dt><dd>XP заработано</dd></div>
+            <div><dt id="statStreak">0</dt><dd>дней подряд</dd></div>
+          </dl>
+        </div>
+        <div class="heatmap reveal">
+          <div class="heatmap__grid" id="heatmap"></div>
+          <div class="heatmap__legend">меньше <i class="l0"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i> больше</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="section__head section__head--center">
+        <h2 class="title reveal">Тарифы</h2>
+        <p class="reveal">Первый урок каждого курса — бесплатно.</p>
+      </div>
+      <div class="plans">
+        <article class="plan reveal">
+          <h3>Самостоятельно</h3>
+          <p class="plan__price">0 ₽</p>
+          <ul>
+            <li>Первые уроки всех курсов</li>
+            <li>Тесты и трекер прогресса</li>
+            <li>Сообщество студентов</li>
+          </ul>
+          <a href="#catalog" class="btn btn--ghost btn--full">Начать</a>
+        </article>
+        <article class="plan plan--hot reveal">
+          <span class="plan__tag">Хит</span>
+          <h3>Pro</h3>
+          <p class="plan__price">1 490 ₽<small>/мес</small></p>
+          <ul>
+            <li>Все курсы без ограничений</li>
+            <li>Ревью домашних заданий</li>
+            <li>Сертификаты о прохождении</li>
+            <li>Карьерная консультация</li>
+          </ul>
+          <a href="#catalog" class="btn btn--full">Попробовать 7 дней</a>
+        </article>
+        <article class="plan reveal">
+          <h3>Для команд</h3>
+          <p class="plan__price">от 990 ₽<small>/чел</small></p>
+          <ul>
+            <li>Всё из Pro</li>
+            <li>Панель руководителя</li>
+            <li>Свои учебные треки</li>
+          </ul>
+          <a href="#catalog" class="btn btn--ghost btn--full">Обсудить</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__big">Учитесь.<br>Делайте.<br>Растите.</div>
+    <div class="footer__row">
+      <a href="#top" class="logo"><span class="logo__mark">SF</span>SkillForge</a>
+      <span>Концепт образовательной платформы для портфолио. Оплата и сертификаты — демонстрационные.</span>
+      <span>© 2026</span>
+    </div>
+  </footer>
+
+  <div class="modal" id="courseModal" aria-hidden="true">
+    <div class="modal__backdrop" data-close></div>
+    <article class="modal__panel" role="dialog" aria-modal="true">
+      <button class="modal__close" data-close aria-label="Закрыть">✕</button>
+      <div class="modal__cover" id="modalCover"></div>
+      <div class="modal__content">
+        <p class="modal__meta" id="modalMeta"></p>
+        <h3 class="modal__title" id="modalTitle"></h3>
+        <p class="modal__desc" id="modalDesc"></p>
+        <div class="modal__facts" id="modalFacts"></div>
+        <h4>Программа</h4>
+        <ol class="curriculum" id="modalCurriculum"></ol>
+        <div class="modal__actions">
+          <button class="btn" id="modalEnroll">Записаться бесплатно</button>
+          <span class="modal__price" id="modalPrice"></span>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="modal" id="authModal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-auth></div>
+    <div class="modal__panel sf-auth" data-auth-root data-view="login" role="dialog" aria-modal="true" aria-label="Вход в SkillForge">
+      <button class="modal__close" data-close-auth aria-label="Закрыть">✕</button>
+      <div class="sf-auth__head">
+        <span class="logo__mark">SF</span>
+        <h3>
+          <span data-pane="login">Снова за работу!</span>
+          <span data-pane="register" hidden>Начнём ковать</span>
+          <span data-pane="reset" hidden>Сброс пароля</span>
+        </h3>
+      </div>
+
+      <div class="sf-tabs">
+        <button data-auth-switch="login">Вход</button>
+        <button data-auth-switch="register">Регистрация</button>
+      </div>
+
+      <form class="sf-form" data-auth-form="login" data-pane="login">
+        <label class="sf-field" data-field>
+          <span>E-mail</span>
+          <input type="email" name="email" placeholder="student@mail.ru" autocomplete="email">
+          <small data-field-error></small>
+        </label>
+        <label class="sf-field" data-field>
+          <span>Пароль</span>
+          <input type="password" name="password" placeholder="••••••••" autocomplete="current-password">
+          <button class="sf-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          <small data-field-error></small>
+        </label>
+        <div class="sf-form__row">
+          <label class="sf-check"><input type="checkbox" name="remember" checked><i></i>Запомнить</label>
+          <button class="sf-link" data-auth-switch="reset">Забыли пароль?</button>
+        </div>
+        <p class="sf-form__error" data-form-error hidden></p>
+        <button class="btn btn--full" type="submit">Войти →</button>
+        <button class="btn btn--ghost btn--full" data-auth-demo>⚡ Демо-студент</button>
+      </form>
+
+      <form class="sf-form" data-auth-form="register" data-pane="register" hidden>
+        <label class="sf-field" data-field>
+          <span>Имя</span>
+          <input type="text" name="name" placeholder="Как к вам обращаться" autocomplete="name">
+          <small data-field-error></small>
+        </label>
+        <label class="sf-field" data-field>
+          <span>E-mail</span>
+          <input type="email" name="email" placeholder="student@mail.ru" autocomplete="email">
+          <small data-field-error></small>
+        </label>
+        <label class="sf-field" data-field>
+          <span>Пароль</span>
+          <input type="password" name="password" placeholder="8+ символов, буквы и цифры" autocomplete="new-password">
+          <button class="sf-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          <small data-field-error></small>
+        </label>
+        <div class="sf-strength" data-strength><i></i><i></i><i></i><i></i><span data-strength-label></span></div>
+        <label class="sf-field" data-field>
+          <span>Повторите пароль</span>
+          <input type="password" name="confirm" placeholder="••••••••" autocomplete="new-password">
+          <small data-field-error></small>
+        </label>
+        <label class="sf-check" data-field>
+          <input type="checkbox" name="agree"><i></i>Принимаю правила платформы
+          <small data-field-error></small>
+        </label>
+        <p class="sf-form__error" data-form-error hidden></p>
+        <button class="btn btn--full" type="submit">Создать аккаунт</button>
+      </form>
+
+      <form class="sf-form" data-auth-form="reset" data-pane="reset" hidden>
+        <p>Введите почту — пришлём ссылку для нового пароля.</p>
+        <label class="sf-field" data-field>
+          <span>E-mail</span>
+          <input type="email" name="email" placeholder="student@mail.ru" autocomplete="email">
+          <small data-field-error></small>
+        </label>
+        <p class="sf-form__success" data-form-success hidden></p>
+        <button class="btn btn--full" type="submit">Отправить</button>
+        <button class="sf-link" data-auth-switch="login">← Ко входу</button>
+      </form>
+
+      <p class="sf-auth__note">Демо: аккаунт и прогресс хранятся только в этом браузере.</p>
+    </div>
+  </div>
+
+  <div class="modal" id="studentModal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-student></div>
+    <div class="modal__panel sf-profile" role="dialog" aria-modal="true" aria-label="Профиль студента">
+      <button class="modal__close" data-close-student aria-label="Закрыть">✕</button>
+      <div class="sf-profile__cover">
+        <span class="sf-profile__avatar" data-auth-initials></span>
+      </div>
+      <div class="sf-profile__body">
+        <div class="sf-profile__name">
+          <h3 data-auth-name></h3>
+          <span class="sf-profile__level" id="studentLevel"></span>
+        </div>
+        <p class="sf-profile__since">На платформе с <span data-auth-since></span></p>
+
+        <div class="sf-xp">
+          <div class="sf-xp__row"><b id="studentXp">0 XP</b><span id="studentNext"></span></div>
+          <div class="sf-xp__bar"><i id="studentBar"></i></div>
+        </div>
+
+        <div class="sf-tabs sf-tabs--wide" id="studentTabs">
+          <button class="is-active" data-stab="learning">Обучение</button>
+          <button data-stab="profile">Профиль</button>
+          <button data-stab="security">Пароль</button>
+        </div>
+
+        <div data-spanel="learning">
+          <h4 class="sf-subtitle">Достижения</h4>
+          <div class="badges" id="badges"></div>
+          <h4 class="sf-subtitle">Мои курсы</h4>
+          <div class="my-courses" id="myCourses"></div>
+        </div>
+
+        <form class="sf-form" data-auth-form="profile" data-spanel="profile" hidden>
+          <label class="sf-field" data-field>
+            <span>Имя</span>
+            <input type="text" name="name">
+            <small data-field-error></small>
+          </label>
+          <label class="sf-field" data-field>
+            <span>E-mail</span>
+            <input type="email" name="email" readonly>
+          </label>
+          <label class="sf-field" data-field>
+            <span>Телефон</span>
+            <input type="tel" name="phone" placeholder="+7 900 000-00-00">
+            <small data-field-error></small>
+          </label>
+          <p class="sf-form__success" data-form-success hidden></p>
+          <button class="btn" type="submit">Сохранить</button>
+        </form>
+
+        <form class="sf-form" data-auth-form="password" data-spanel="security" hidden>
+          <label class="sf-field" data-field>
+            <span>Текущий пароль</span>
+            <input type="password" name="current" autocomplete="current-password">
+            <small data-field-error></small>
+          </label>
+          <label class="sf-field" data-field>
+            <span>Новый пароль</span>
+            <input type="password" name="password" autocomplete="new-password">
+            <button class="sf-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <small data-field-error></small>
+          </label>
+          <div class="sf-strength" data-strength><i></i><i></i><i></i><i></i><span data-strength-label></span></div>
+          <label class="sf-field" data-field>
+            <span>Повторите пароль</span>
+            <input type="password" name="confirm" autocomplete="new-password">
+            <small data-field-error></small>
+          </label>
+          <p class="sf-form__error" data-form-error hidden></p>
+          <p class="sf-form__success" data-form-success hidden></p>
+          <button class="btn" type="submit">Обновить пароль</button>
+        </form>
+
+        <button class="sf-logout" data-auth-logout>Выйти из аккаунта</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+  <script src="account.js"></script>
+</body>
+</html>

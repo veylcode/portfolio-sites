@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMBER — ресторан живого огня</title>
+  <meta name="description" content="EMBER — ресторан, где всё готовится на открытом огне. Меню, сет шефа и онлайн-бронирование.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Prata&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="account.css">
+</head>
+<body>
+  <header class="header" id="header">
+    <a href="#top" class="logo">
+      <svg viewBox="0 0 24 32" class="logo__flame"><path d="M12 1c1 6 8 9 8 18a8 8 0 0 1-16 0c0-5 3-7 4-11 1 3 2 4 4 5-1-5-1-8 0-12Z"/></svg>
+      EMBER
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#story">История</a>
+      <a href="#menu">Меню</a>
+      <a href="#tasting">Сет шефа</a>
+      <a href="#visit">Контакты</a>
+    </nav>
+    <button class="guest-btn" id="guestBtn" aria-label="Кабинет гостя">
+      <svg viewBox="0 0 24 24" data-when="out"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+      <span class="guest-btn__initials" data-when="in" data-auth-initials></span>
+      <span class="guest-btn__label" data-when="out">Войти</span>
+    </button>
+    <a href="#reserve" class="btn btn--outline">Забронировать</a>
+    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span></button>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="hero__bg">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=2000&q=80" alt="">
+      </div>
+      <canvas class="hero__sparks" id="sparks"></canvas>
+      <div class="hero__content">
+        <p class="hero__status" id="openStatus"><span class="hero__dot"></span>Проверяем расписание…</p>
+        <h1 class="hero__title">
+          <span class="hero__line">Кухня</span>
+          <span class="hero__line"><i>живого</i> огня</span>
+        </h1>
+        <p class="hero__lead">Дровяная печь, угли берёзы и вишни, сезонные продукты с ферм в сотне километров от Москвы.</p>
+        <div class="hero__actions">
+          <a href="#reserve" class="btn">Забронировать стол</a>
+          <a href="#menu" class="link">Смотреть меню →</a>
+        </div>
+      </div>
+      <div class="hero__scroll"><span></span></div>
+    </section>
+
+    <section class="story" id="story">
+      <div class="story__media reveal">
+        <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=1200&q=80" alt="Стейк на углях" loading="lazy">
+      </div>
+      <div class="story__text">
+        <p class="kicker reveal">История</p>
+        <h2 class="title reveal">Огонь — <i>единственный</i> повар, которому мы доверяем больше, чем себе</h2>
+        <p class="reveal">EMBER начался с одной печи в старом депо на Бауманской. Мы отказались от газа и индукции: всё меню — от хлеба до десерта — проходит через пламя, дым или угли.</p>
+        <p class="reveal">Каждый вечер шеф Артём Корнеев решает, какое дерево сегодня будет в печи. Дуб даёт глубину, вишня — сладость, берёза — чистоту.</p>
+        <dl class="story__facts">
+          <div class="reveal"><dt data-count="900">0</dt><dd>°C в сердце печи</dd></div>
+          <div class="reveal"><dt data-count="48">0</dt><dd>часов ферментации теста</dd></div>
+          <div class="reveal"><dt data-count="12">0</dt><dd>видов древесины</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="menu" id="menu">
+      <div class="menu__head">
+        <p class="kicker reveal">Меню</p>
+        <h2 class="title reveal">Что сегодня <i>на углях</i></h2>
+      </div>
+      <div class="tabs reveal" id="menuTabs" role="tablist">
+        <button class="tabs__btn is-active" data-tab="starters">Начало</button>
+        <button class="tabs__btn" data-tab="fire">С огня</button>
+        <button class="tabs__btn" data-tab="desserts">Десерты</button>
+        <button class="tabs__btn" data-tab="drinks">Напитки</button>
+        <span class="tabs__line" id="tabsLine"></span>
+      </div>
+      <ul class="menu__list" id="menuList"></ul>
+      <p class="menu__legend">
+        <span><b class="tag tag--spicy">◆</b> острое</span>
+        <span><b class="tag tag--veg">●</b> вегетарианское</span>
+        <span><b class="tag tag--sign">★</b> блюдо-подпись</span>
+      </p>
+      <div class="menu__preview" id="menuPreview"><img src="" alt=""></div>
+    </section>
+
+    <section class="tasting" id="tasting">
+      <div class="tasting__intro">
+        <p class="kicker reveal">Сет шефа</p>
+        <h2 class="title reveal">Семь подач.<br><i>Один костёр.</i></h2>
+        <p class="reveal">Путешествие от холодного дыма к раскалённым углям и обратно — к тлеющему десерту. Только по предварительной брони, со среды по субботу.</p>
+        <p class="tasting__price reveal">7 900 ₽ <span>· винное сопровождение + 5 400 ₽</span></p>
+      </div>
+      <ol class="courses" id="courses">
+        <li class="course"><span>1</span><div><b>Хлеб из печи</b><small>масло с золой, копчёная соль</small></div></li>
+        <li class="course"><span>2</span><div><b>Устрица на углях</b><small>сливочное масло с облепихой</small></div></li>
+        <li class="course"><span>3</span><div><b>Свёкла в глине</b><small>козий сыр, лесной орех</small></div></li>
+        <li class="course"><span>4</span><div><b>Форель холодного дыма</b><small>огурец, укроп, пахта</small></div></li>
+        <li class="course"><span>5</span><div><b>Утка на вишнёвых дровах</b><small>печёная груша, можжевельник</small></div></li>
+        <li class="course"><span>6</span><div><b>Рибай сухой выдержки</b><small>костный мозг, перечный соус</small></div></li>
+        <li class="course"><span>7</span><div><b>Тлеющее мороженое</b><small>дымный карамель, сосна</small></div></li>
+      </ol>
+    </section>
+
+    <section class="chef">
+      <div class="chef__img reveal">
+        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=1000&q=80" alt="Шеф EMBER" loading="lazy">
+      </div>
+      <blockquote class="chef__quote reveal">
+        <p>«Огонь нельзя контролировать — с ним можно только договориться. Каждый вечер это новый разговор».</p>
+        <footer>Артём Корнеев, шеф-повар</footer>
+      </blockquote>
+    </section>
+
+    <section class="gallery">
+      <figure class="gallery__item gallery__item--tall reveal"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80" alt="Зал ресторана" loading="lazy"></figure>
+      <figure class="gallery__item reveal"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80" alt="Блюдо" loading="lazy"></figure>
+      <figure class="gallery__item reveal"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80" alt="Вечер в ресторане" loading="lazy"></figure>
+      <figure class="gallery__item gallery__item--wide reveal"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=80" alt="Интерьер" loading="lazy"></figure>
+      <figure class="gallery__item reveal"><img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=900&q=80" alt="Подача" loading="lazy"></figure>
+    </section>
+
+    <section class="reserve" id="reserve">
+      <div class="reserve__head">
+        <p class="kicker reveal">Бронирование</p>
+        <h2 class="title reveal">Оставим для вас <i>место у огня</i></h2>
+      </div>
+
+      <div class="reserve__layout">
+        <form class="booking" id="bookingForm" novalidate>
+          <fieldset class="booking__step">
+            <legend><span>1</span>Дата</legend>
+            <div class="dates" id="dates"></div>
+          </fieldset>
+
+          <fieldset class="booking__step">
+            <legend><span>2</span>Гости</legend>
+            <div class="stepper">
+              <button type="button" data-guests="-1" aria-label="Меньше гостей">−</button>
+              <output id="guestsOut">2</output>
+              <button type="button" data-guests="1" aria-label="Больше гостей">+</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="booking__step">
+            <legend><span>3</span>Время</legend>
+            <div class="slots" id="slots"></div>
+          </fieldset>
+
+          <fieldset class="booking__step">
+            <legend><span>4</span>Контакты</legend>
+            <div class="booking__fields">
+              <label class="input">
+                <span>Имя</span>
+                <input type="text" name="name" required minlength="2" autocomplete="name">
+              </label>
+              <label class="input">
+                <span>Телефон</span>
+                <input type="tel" name="phone" required pattern="[\d\s\+\-\(\)]{10,}" autocomplete="tel">
+              </label>
+              <label class="input input--wide">
+                <span>Повод</span>
+                <select name="occasion">
+                  <option value="">Просто ужин</option>
+                  <option value="День рождения">День рождения</option>
+                  <option value="Свидание">Свидание</option>
+                  <option value="Деловая встреча">Деловая встреча</option>
+                  <option value="Сет шефа">Сет шефа</option>
+                </select>
+              </label>
+              <label class="input input--wide">
+                <span>Пожелания</span>
+                <input type="text" name="wishes" placeholder="Аллергии, стол у печи, детский стул…">
+              </label>
+            </div>
+          </fieldset>
+          <p class="booking__error" id="bookingError"></p>
+        </form>
+
+        <aside class="summary" id="summary">
+          <div class="summary__inner">
+            <p class="summary__label">Ваша бронь</p>
+            <dl class="summary__list">
+              <div><dt>Дата</dt><dd id="sumDate">—</dd></div>
+              <div><dt>Время</dt><dd id="sumTime">—</dd></div>
+              <div><dt>Гостей</dt><dd id="sumGuests">2</dd></div>
+              <div><dt>Повод</dt><dd id="sumOccasion">Просто ужин</dd></div>
+            </dl>
+            <button class="btn btn--full" type="submit" form="bookingForm">Подтвердить</button>
+            <p class="summary__note">Демо-бронирование: запрос сохраняется только в браузере.</p>
+          </div>
+
+          <div class="ticket" id="ticket" hidden>
+            <p class="summary__label">Подтверждено</p>
+            <p class="ticket__code" id="ticketCode"></p>
+            <p class="ticket__text" id="ticketText"></p>
+            <div class="ticket__actions">
+              <button class="btn btn--full" id="icsBtn">Добавить в календарь</button>
+              <button class="link" id="newBooking">Новая бронь</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="visit" id="visit">
+      <div class="visit__col reveal">
+        <p class="kicker">Адрес</p>
+        <p class="visit__big">Москва,<br>ул. Бауманская, 11с4</p>
+        <p class="muted">Вход со двора, через кованые ворота старого депо</p>
+      </div>
+      <div class="visit__col reveal">
+        <p class="kicker">Часы работы</p>
+        <ul class="hours" id="hours"></ul>
+      </div>
+      <div class="visit__col reveal">
+        <p class="kicker">Связь</p>
+        <a class="visit__big" href="tel:+74950000000">+7 495 000-00-00</a>
+        <a class="muted" href="mailto:fire@ember.rest">fire@ember.rest</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__word">EMBER</p>
+    <div class="footer__row">
+      <span>© 2026 EMBER</span>
+      <span>Концепт сайта ресторана для портфолио</span>
+      <a href="#top">Наверх ↑</a>
+    </div>
+  </footer>
+
+  <div class="ember-modal" id="guestModal" aria-hidden="true">
+    <div class="ember-modal__backdrop" data-close-guest></div>
+    <div class="ember-modal__panel" role="dialog" aria-modal="true" aria-label="Кабинет гостя">
+      <span class="ember-modal__glow" aria-hidden="true"></span>
+      <button class="ember-modal__close" data-close-guest aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+
+      <div class="guest-auth" data-when="out" data-auth-root data-view="login">
+        <svg viewBox="0 0 24 32" class="guest-auth__flame"><path d="M12 1c1 6 8 9 8 18a8 8 0 0 1-16 0c0-5 3-7 4-11 1 3 2 4 4 5-1-5-1-8 0-12Z"/></svg>
+        <p class="kicker">Кабинет гостя</p>
+        <h2 class="guest-auth__title">
+          <span data-pane="login">Рады видеть <i>снова</i></span>
+          <span data-pane="register" hidden>Место у <i>огня</i></span>
+          <span data-pane="reset" hidden>Восстановить <i>доступ</i></span>
+        </h2>
+        <p class="guest-auth__lead" data-pane="login">Брони, бонусные угольки и любимые блюда — в одном месте.</p>
+        <p class="guest-auth__lead" data-pane="register" hidden>Регистрация займёт минуту, а первые 300 угольков — наш подарок.</p>
+
+        <form class="e-form" data-auth-form="login" data-pane="login">
+          <label class="e-field" data-field>
+            <span>E-mail</span>
+            <input type="email" name="email" autocomplete="email">
+            <small data-field-error></small>
+          </label>
+          <label class="e-field" data-field>
+            <span>Пароль</span>
+            <input type="password" name="password" autocomplete="current-password">
+            <button class="e-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <small data-field-error></small>
+          </label>
+          <div class="e-form__row">
+            <label class="e-check"><input type="checkbox" name="remember" checked><i></i>Запомнить меня</label>
+            <button class="link" data-auth-switch="reset">Забыли пароль?</button>
+          </div>
+          <p class="e-form__error" data-form-error hidden></p>
+          <button class="btn btn--full" type="submit">Войти</button>
+          <div class="e-form__alt">
+            <button class="link" data-auth-switch="register">Создать аккаунт</button>
+            <span>·</span>
+            <button class="link" data-auth-demo>Демо-вход</button>
+          </div>
+        </form>
+
+        <form class="e-form" data-auth-form="register" data-pane="register" hidden>
+          <label class="e-field" data-field>
+            <span>Имя</span>
+            <input type="text" name="name" autocomplete="name">
+            <small data-field-error></small>
+          </label>
+          <label class="e-field" data-field>
+            <span>E-mail</span>
+            <input type="email" name="email" autocomplete="email">
+            <small data-field-error></small>
+          </label>
+          <div class="e-form__pair">
+            <label class="e-field" data-field>
+              <span>Пароль</span>
+              <input type="password" name="password" autocomplete="new-password">
+              <button class="e-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+              <small data-field-error></small>
+            </label>
+            <label class="e-field" data-field>
+              <span>Повтор</span>
+              <input type="password" name="confirm" autocomplete="new-password">
+              <small data-field-error></small>
+            </label>
+          </div>
+          <div class="e-strength" data-strength><i></i><i></i><i></i><i></i><span data-strength-label></span></div>
+          <label class="e-check" data-field>
+            <input type="checkbox" name="agree"><i></i>Согласен с правилами бонусной программы
+            <small data-field-error></small>
+          </label>
+          <p class="e-form__error" data-form-error hidden></p>
+          <button class="btn btn--full" type="submit">Зарегистрироваться</button>
+          <div class="e-form__alt"><button class="link" data-auth-switch="login">Уже есть аккаунт? Войти</button></div>
+        </form>
+
+        <form class="e-form" data-auth-form="reset" data-pane="reset" hidden>
+          <label class="e-field" data-field>
+            <span>E-mail</span>
+            <input type="email" name="email" autocomplete="email">
+            <small data-field-error></small>
+          </label>
+          <p class="e-form__success" data-form-success hidden></p>
+          <button class="btn btn--full" type="submit">Отправить ссылку</button>
+          <div class="e-form__alt"><button class="link" data-auth-switch="login">← Ко входу</button></div>
+        </form>
+
+        <p class="guest-auth__note">Демо-режим: аккаунт хранится только в этом браузере.</p>
+      </div>
+
+      <div class="guest-room" data-when="in">
+        <div class="guest-room__head">
+          <span class="guest-room__avatar" data-auth-initials></span>
+          <div>
+            <p class="kicker">Кабинет гостя</p>
+            <h2><span data-auth-first-name></span>, <i>добрый вечер</i></h2>
+          </div>
+        </div>
+
+        <div class="loyalty">
+          <div>
+            <small>Угольки на счету</small>
+            <b id="emberPoints">0</b>
+          </div>
+          <div class="loyalty__level">
+            <span id="emberLevel">Искра</span>
+            <div class="loyalty__bar"><i id="emberBar"></i></div>
+            <small id="emberNext"></small>
+          </div>
+        </div>
+
+        <nav class="guest-room__tabs" id="guestTabs">
+          <button class="is-active" data-gtab="bookings">Мои брони</button>
+          <button data-gtab="profile">Профиль</button>
+          <button data-gtab="security">Пароль</button>
+        </nav>
+
+        <div data-gpanel="bookings">
+          <ul class="bookings" id="bookingsList"></ul>
+        </div>
+
+        <form class="e-form" data-auth-form="profile" data-gpanel="profile" hidden>
+          <label class="e-field" data-field>
+            <span>Имя</span>
+            <input type="text" name="name">
+            <small data-field-error></small>
+          </label>
+          <label class="e-field" data-field>
+            <span>E-mail</span>
+            <input type="email" name="email" readonly>
+          </label>
+          <label class="e-field" data-field>
+            <span>Телефон</span>
+            <input type="tel" name="phone" placeholder="+7 900 000-00-00">
+            <small data-field-error></small>
+          </label>
+          <p class="e-form__success" data-form-success hidden></p>
+          <button class="btn" type="submit">Сохранить</button>
+        </form>
+
+        <form class="e-form" data-auth-form="password" data-gpanel="security" hidden>
+          <label class="e-field" data-field>
+            <span>Текущий пароль</span>
+            <input type="password" name="current" autocomplete="current-password">
+            <small data-field-error></small>
+          </label>
+          <div class="e-form__pair">
+            <label class="e-field" data-field>
+              <span>Новый пароль</span>
+              <input type="password" name="password" autocomplete="new-password">
+              <button class="e-field__eye" data-toggle-password aria-label="Показать пароль"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+              <small data-field-error></small>
+            </label>
+            <label class="e-field" data-field>
+              <span>Повтор</span>
+              <input type="password" name="confirm" autocomplete="new-password">
+              <small data-field-error></small>
+            </label>
+          </div>
+          <div class="e-strength" data-strength><i></i><i></i><i></i><i></i><span data-strength-label></span></div>
+          <p class="e-form__error" data-form-error hidden></p>
+          <p class="e-form__success" data-form-success hidden></p>
+          <button class="btn" type="submit">Обновить пароль</button>
+        </form>
+
+        <button class="guest-room__logout link" data-auth-logout>Выйти из аккаунта</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
+  <script src="account.js"></script>
+</body>
+</html>

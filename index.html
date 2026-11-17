@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Портфолио — сайты с характером</title>
+  <meta name="description" content="Портфолио веб-разработчика: интерактивные сайты для недвижимости, финтеха, e-commerce, ресторанов, медицины, туризма, образования и SaaS.">
+  <meta property="og:title" content="Портфолио — сайты с характером">
+  <meta property="og:description" content="Интерактивные сайты с собственным визуальным языком. Смотрите вживую на любом устройстве.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0a0a0b">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ededf0'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%230a0a0b'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/hub.css">
+</head>
+<body>
+  <div class="spotlight" id="spotlight" aria-hidden="true"></div>
+
+  <header class="header" id="header">
+    <a href="#top" class="logo" id="logo"><span class="logo__mark"></span><span id="logoName"></span></a>
+    <nav class="nav">
+      <a href="#works">Работы</a>
+      <a href="#about">Обо мне</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <button class="share-btn" id="shareBtn">
+      <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>
+      <span>Поделиться</span>
+    </button>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <p class="hero__role" id="heroRole"></p>
+      <h1 class="hero__title" id="heroTitle"></h1>
+      <div class="hero__bottom">
+        <p class="hero__lead">Каждый проект можно открыть вживую и проверить на компьютере, планшете и телефоне прямо на этой странице.</p>
+        <a href="#works" class="hero__cta">
+          <span>Смотреть работы</span>
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </a>
+      </div>
+      <dl class="hero__stats" id="heroStats"></dl>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track" id="ticker"></div>
+    </div>
+
+    <section class="works" id="works">
+      <div class="works__head">
+        <h2 class="section-title reveal">Избранные <span class="accent">работы</span></h2>
+        <div class="filters reveal" id="filters"></div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="about__label reveal">Обо мне</div>
+      <div class="about__body">
+        <p class="about__text reveal" id="aboutText"></p>
+        <ul class="skills reveal" id="skills"></ul>
+        <div class="principles">
+          <article class="principle reveal">
+            <span>1</span>
+            <h3>Характер</h3>
+            <p>У каждого проекта — свой визуальный язык, а не перекрашенный шаблон.</p>
+          </article>
+          <article class="principle reveal">
+            <span>2</span>
+            <h3>Функция</h3>
+            <p>Фильтры, корзины, бронирования, кабинеты — интерфейсы, которые действительно работают.</p>
+          </article>
+          <article class="principle reveal">
+            <span>3</span>
+            <h3>Детали</h3>
+            <p>Анимации со смыслом, адаптивность до 360 px и чистый читаемый код.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <p class="contact__kicker reveal">Есть идея проекта?</p>
+      <h2 class="contact__title reveal">Давайте сделаем<br><span class="accent">что-то заметное</span></h2>
+      <ul class="contact__list" id="contacts"></ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span id="footerName"></span>
+    <span id="footerCount"></span>
+    <a href="#top">Наверх ↑</a>
+  </footer>
+
+  <div class="viewer" id="viewer" aria-hidden="true">
+    <div class="viewer__bar">
+      <div class="viewer__info">
+        <span class="viewer__dot" id="viewerDot"></span>
+        <div>
+          <b id="viewerTitle"></b>
+          <small id="viewerCategory"></small>
+        </div>
+      </div>
+      <div class="devices" id="devices">
+        <button class="is-active" data-device="desktop" aria-label="Компьютер">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <span>ПК</span>
+        </button>
+        <button data-device="tablet" aria-label="Планшет">
+          <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M11 18h2"/></svg>
+          <span>Планшет</span>
+        </button>
+        <button data-device="mobile" aria-label="Телефон">
+          <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+          <span>Телефон</span>
+        </button>
+      </div>
+      <div class="viewer__actions">
+        <button class="icon-btn" id="viewerPrev" aria-label="Предыдущая работа"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="icon-btn" id="viewerNext" aria-label="Следующая работа"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
+        <button class="icon-btn" id="viewerShare" aria-label="Скопировать ссылку на работу"><svg viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></button>
+        <a class="viewer__open" id="viewerOpen" target="_blank" rel="noopener">Открыть сайт ↗</a>
+        <button class="icon-btn" id="viewerClose" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      </div>
+    </div>
+    <div class="viewer__stage" id="viewerStage">
+      <div class="frame" id="frame">
+        <div class="frame__loader" id="frameLoader"><span></span></div>
+        <iframe id="viewerFrame" title="Предпросмотр сайта" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="projects.js"></script>
+  <script src="assets/hub.js"></script>
+</body>
+</html>
